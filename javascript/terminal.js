@@ -65,27 +65,15 @@ $(document).ready(function() {
 
             // Befehle verarbeiten
             if (input === 'help') {
-                output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help,
-                    version,
-                    exit,
-                    clear\n`;
+                output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help, version, shutdown, clear\n`;
             } else if (input === 'version') {
                 output.innerHTML += `${promptAndInput}\nVERSION 0.1\n`;
             } else if (input === 'todo') {
-                output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:
-                siedersay STRING
-                date
-                ip
-                mensa
-                calc\n`;
-                
+                output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:\nsiedersay STRING\ndate\nip\nmensa\ncalc\nrandom INT\nrps\nvacation\n`;
             } else if (input === 'shutdown') {
                 output.innerHTML += `${promptAndInput}\n`;
-
-                // Verwende die Shutdown-Simulation anstelle des Redirects
                 const outputDiv = document.getElementById('output');
                 simulateShutdown(outputDiv);
-                
             } else if (input === 'clear') {
                 output.innerHTML = ''; 
             } else {
@@ -137,7 +125,7 @@ function simulateShutdown(outputDiv) {
         "[INFO] Syncing file systems...",
         "[OK] System will halt now.",
         "[OK] System halted.",
-        "Powering off in 5... 4... 3... 2... 1...",
+        "Powering off in 3... 2... 1...",
         "[INFO] System has powered off."
     ];
 
@@ -149,6 +137,11 @@ function simulateShutdown(outputDiv) {
             outputDiv.scrollTop = outputDiv.scrollHeight;
             index++;
             setTimeout(displayNextMessage, 200);
+        } else {
+            // Weiterleitung nach dem letzten Shutdown-Message
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 3000); // Verzögerung für eine bessere Nutzererfahrung
         }
     }
 

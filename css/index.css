@@ -3,16 +3,23 @@ body {
     margin: 0;
     background-color: #121212;
     overflow: hidden;
-    
+
 }  
 
-.title{
-    margin-top: 25px;
+.title {
+    padding: 1%;
+    background-color: black;
+    border-radius: 10px;
+    height: 20px;
+    width: 120px;
+    margin: auto; 
     text-align: center;
-    color: green;
-    font-weight: bold;
+    color: rgb(4, 255, 4);
+    font-weight: bolder;
     font-size: 15px;
+    outline: rgb(0, 0, 0);
 }
+
 
 /* Zurück Button*/ 
 #zurueck-button {
@@ -56,6 +63,7 @@ body {
    
    /* Cards */
    #services {
+    margin-top: 6%;
     display: flex;
     justify-content: space-around;
     padding: 2rem;
@@ -82,7 +90,7 @@ body {
   
   .card {
     border-radius: 10px;
-    background-color: #333;
+    background-color: #333333;
     color: rgb(216, 216, 216);
     padding: 20px;
     width: 300px;
@@ -108,12 +116,23 @@ body {
   
   .card:hover {
     transform: scale(1.05);
-    background-color: #12c600;
+    background-color: #10c600;
     color: rgb(29, 29, 29);
 
   }
    /* Media Queries */
 @media only screen and (max-width: 768px){
+    body {
+        padding: 9%;
+        margin: 0;
+        background-color: #121212;
+        overflow: hidden;
+        background-image: url("../pictures/background.png");
+        background-size: cover; 
+        background-repeat: no-repeat;
+        background-position: center; 
+        height: 100vh; 
+    }
     nav ul li {
       display: block;
       margin: 0.5 rem 0;
@@ -141,11 +160,18 @@ body {
         text-decoration: none;
       }
       .title{
-        margin-top: 20px;
+        
+        padding: 2%;
+        background-color: black;
+        border-radius: 10px;
+        height: 15px;
+        width: 120px;
+        margin: auto; 
         text-align: center;
-        color: green;
-        font-weight: bold;
+        color: rgb(4, 255, 4);
+        font-weight: bolder;
         font-size: 15px;
+        outline: rgb(0, 0, 0);
     }
 }
 
