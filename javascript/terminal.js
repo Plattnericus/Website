@@ -1,134 +1,156 @@
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var fontSize = 16;
-var str = "Letters Dropping";
-var drops = [];
-var columns;
-var fallSpeed = 1; 
+$(document).ready(function() {
+    /* Canvas-Animation für "Letters Dropping" */
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var fontSize = 16;
+    var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var drops = [];
+    var columns;
+    var fallSpeed = 2; 
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = [];
-    for (var i = 0; i < columns; i++) {
-        drops[i] = 0;
-    }
-}
-
-function draw() {
-    context.fillStyle = "rgba(0,0,0,0.05)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.font = "700 " + fontSize + "px sans-serif";
-    context.fillStyle = "#00cc33";
-
-    for (var i = 0; i < columns; i++) {
-        var index = Math.floor(Math.random() * str.length);
-        var x = i * fontSize;
-        var y = drops[i] * fontSize;
-
-        context.fillText(str[index], x, y);
-
-        if (y >= canvas.height && Math.random() > 0.99) {
+    // Historie für Befehle
+    var commandHistory = [];
+    var historyIndex = -1;
+    
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = [];
+        for (var i = 0; i < columns; i++) {
             drops[i] = 0;
         }
-        drops[i] += fallSpeed;
-    }
-}
-
-function update() {
-    draw();
-    requestAnimationFrame(update);
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-update();
-
-
-
-$(document).ready(function() {
-    const $input = $('#input');
-    const $output = $('#output');
-    const $form = $('#form');
-    const $fakeClose = $('#fakeClose');
-    const $fakeMinimize = $('#fakeMinimize');
-    const $fakeZoom = $('#fakeZoom');
-
-    function resetForm() {
-        const message = "PLEASE TYPE `HELP` FOR HELP";
-        $output.text('');
-        $input.val('');
-        $('.new-output').removeClass('new-output');
-        $('.terminal').append(`<p class="prompt">${message}</p><p class="prompt output new-output"></p>`);
     }
 
-    function cmdKittens() {
-        window.location.href = '/';  // Navigate to home
+    function draw() {
+        context.fillStyle = "rgba(0, 0, 0, 0.05)";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.font = fontSize + "px monospace";
+        context.fillStyle = "#00cc33";
+
+        for (var i = 0; i < columns; i++) {
+            var index = Math.floor(Math.random() * str.length);
+            var x = i * fontSize;
+            var y = drops[i] * fontSize;
+
+            context.fillText(str[index], x, y);
+
+            if (y > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
     }
 
-    function textEffect(line) {
-        const alpha = [';', '.', ',', ':', ';', '~', '`'];
-        const animationSpeed = 10;
-        let index = 0;
-        const string = line.text();
-        const splitString = string.split("");
-        const copyString = splitString.slice(0);
-
-        let emptyString = copyString.map(function(el){
-            return [alpha[Math.floor(Math.random() * (alpha.length))], index++];
-        });
-
-        emptyString = shuffle(emptyString);
-
-        $.each(copyString, function(i, el){
-            const newChar = emptyString[i];
-            toUnderscore(copyString, line, newChar);
-
-            setTimeout(function(){
-                fromUnderscore(copyString, splitString, newChar, line);
-            }, i * animationSpeed);
-        });
+    function updateCanvas() {
+        draw();
+        requestAnimationFrame(updateCanvas);
     }
 
-    function toUnderscore(copyString, line, newChar) {
-        copyString[newChar[1]] = newChar[0];
-        line.text(copyString.join(''));
-    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    updateCanvas();
 
-    function fromUnderscore(copyString, splitString, newChar, line) {
-        copyString[newChar[1]] = splitString[newChar[1]];
-        line.text(copyString.join(''));
-    }
-
-    function shuffle(o) {
-        for (let j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-        return o;
-    }
-
-    $input.on('input', function() {
-        const value = $(this).val();
-        $('.new-output').text(value);
+    document.addEventListener('click', function() {
+        document.getElementById('input').focus();
     });
+    
+    document.getElementById('input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            const input = this.value.toLowerCase(); 
+            const output = document.getElementById('output');
 
-    $form.on('submit', function(e) {
-        e.preventDefault();
-        const inputValue = $input.val().toLowerCase();
-        if (inputValue === 'kittens') {
-            cmdKittens();
-        } else {
-            resetForm();
+            const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
+
+            // Befehle verarbeiten
+            if (input === 'help') {
+                output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help,
+                    version,
+                    exit,
+                    clear\n`;
+            } else if (input === 'version') {
+                output.innerHTML += `${promptAndInput}\nVERSION 0.1\n`;
+            } else if (input === 'todo') {
+                output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:
+                siedersay STRING
+                date
+                ip
+                mensa
+                calc\n`;
+                
+            } else if (input === 'shutdown') {
+                output.innerHTML += `${promptAndInput}\n`;
+
+                // Verwende die Shutdown-Simulation anstelle des Redirects
+                const outputDiv = document.getElementById('output');
+                simulateShutdown(outputDiv);
+                
+            } else if (input === 'clear') {
+                output.innerHTML = ''; 
+            } else {
+                output.innerHTML += `${promptAndInput}\n<span style="color: red;">COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
+            }
+
+            commandHistory.push(input);
+            historyIndex = commandHistory.length; 
+            this.value = '';
+            output.scrollTop = output.scrollHeight;
         }
     });
 
-    function handleDocumentClick() {
-        $input.focus();
+    document.getElementById('input').addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowUp') {
+            if (historyIndex > 0) {
+                historyIndex--;
+                this.value = commandHistory[historyIndex];
+            }
+        } else if (event.key === 'ArrowDown') {
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                this.value = commandHistory[historyIndex];
+            } else if (historyIndex === commandHistory.length - 1) {
+                historyIndex++;
+                this.value = ''; 
+            }
+        }
+    });
+});
+
+// Die Shutdown-Simulation vom zweiten Code
+function simulateShutdown(outputDiv) {
+    const shutdownMessages = [
+        "[INFO] Starting shutdown sequence...",
+        "[OK] Stopping web server: apache2.",
+        "[OK] Stopping database server: mysql.",
+        "[OK] Stopping system logging service: rsyslog.",
+        "[OK] Stopping OpenSSH server: sshd.",
+        "[OK] Unmounting /dev/sda1...",
+        "[OK] Unmounting /dev/sdb1...",
+        "[OK] Flushing file systems...",
+        "[OK] Stopping remaining processes...",
+        "[INFO] Sending SIGTERM to remaining processes...",
+        "[INFO] Sending SIGKILL to remaining processes...",
+        "[OK] Unmounting remaining file systems...",
+        "[INFO] Deactivating swap...",
+        "[INFO] Powering off...",
+        "[INFO] Syncing file systems...",
+        "[OK] System will halt now.",
+        "[OK] System halted.",
+        "Powering off in 5... 4... 3... 2... 1...",
+        "[INFO] System has powered off."
+    ];
+
+    let index = 0;
+
+    function displayNextMessage() {
+        if (index < shutdownMessages.length) {
+            outputDiv.innerHTML += `<p>${shutdownMessages[index]}</p>`;
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+            index++;
+            setTimeout(displayNextMessage, 200);
+        }
     }
 
-    $(document).on('click', handleDocumentClick);
-
-    $fakeClose.add($fakeMinimize).add($fakeZoom).on('click', cmdKittens);
-
-    // Initialize focus
-    $input.focus();
-});
+    displayNextMessage();
+}

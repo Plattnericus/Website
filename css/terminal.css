@@ -8,164 +8,121 @@
     filter: blur(0.5rem);
 }
 
-@keyframes cursor-blink {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-.four-oh-four {
-    text-align: block;
-    position: relative;
-    top: 0;
-    left: 0;
-    min-width: 100vw;
-    z-index: 2;
-    transition: opacity 300ms ease-out;
-}
-
-.four-oh-four .dJAX_internal {
-    opacity: 0.0;
-}
-
-.four-oh-four form,
-.four-oh-four input {
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    background-color: black;
+body {
+    font-size: larger;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
 }
 
 .terminal {
-    position: relative;
-    padding: 3rem;
-    background-color: rgba(255, 255, 255, 0.171);
-    border: solid 1px white;
+    padding: 20px;
+    width: 90vw; /* Breite auf 90% des Viewports setzen */
+    max-width: 600px; /* Maximale Breite für größere Bildschirme */
+    height: auto; /* Höhe anpassen, um den Inhalt zu passen */
+    overflow-y: auto;
+    float: left;
+    margin: 0 auto; /* Zentriert den Container */
 }
 
-.terminal .prompt {
-    color: #1ff042;
-    display: block;
-    font-family: 'AndaleMono', monospace;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 0.15em;
-    white-space: pre-wrap;
-    text-shadow: 0 0 2px rgba(5, 92, 19, 0.75);
-    line-height: 1;
-    margin-bottom: 0.75em;
+.output {
+    white-space: pre;
 }
 
-.prompt2 {
-    color: #1ff042;
-    display: block;
-    font-family: 'AndaleMono', monospace;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 0.15em;
-    white-space: pre-wrap;
-    text-shadow: 0 0 2px rgba(5, 92, 19, 0.75);
-    line-height: 1;
-    margin-bottom: 0.75em;
+.input-line {
+    display: flex;
+    align-items: center;
 }
 
-.terminal .prompt:before {
-    content: '> ';
-    display: inline-block;
+.prompt {
+    margin-right: 5px;
+    color: green;
 }
 
-.terminal .new-output {
-    display: inline-block;
+.bigAsciiArt {
+    font-size: xx-large;
+    color: green;
+    margin-right: 5px;
 }
 
-.terminal .new-output:after {
-    display: inline-block;
-    vertical-align: -0.15em;
-    width: 0.75em;
-    height: 1em;
+.firstHelpText {
+    font-size: x-large;
+    color: green;
+    margin-top: -30px;
+    margin-right: 5px;
+}
+
+input {
+    font-size: large;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    outline: none;
+    flex-grow: 1;
+}
+
+/* Zurück Button */ 
+#zurueck-button {
+    display: flex;
+    bottom: 20px;
+    right: 20px;
+    left: auto;
+    top: auto;
+    text-align: center;
+    position: absolute;
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #121212;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    color: #12c600;
+}
+
+#zurueck-button > svg {
+    margin-right: 5px;
     margin-left: 5px;
-    background: #1ff042;
-    box-shadow: 1px 1px 1px rgba(31, 240, 66, 0.65), -1px -1px 1px rgba(31, 240, 66, 0.65), 1px -1px 1px rgba(31, 240, 66, 0.65), -1px 1px 1px rgba(31, 240, 66, 0.65);
-    animation: cursor-blink 1.25s steps(1) infinite;
-    content: '';
+    font-size: 20px;
+    transition: all 0.4s ease-in;
 }
 
-.kittens p {
-    letter-spacing: 0;
-    opacity: 0;
-    line-height: 1rem;
+#zurueck-button:hover > svg {
+    font-size: 1.2em;
+    transform: translateX(-5px);
 }
 
-.kitten-gif {
-    margin: 20px;
-    max-width: 300px;
+#zurueck-button:hover {
+    box-shadow: 9px 9px 33px #12c600, -9px -9px 33px #12c600;
+    transform: translateY(-2px);
 }
 
-.four-oh-four-form {
-    opacity: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
+/* Media Query für Bildschirme mit maximal 768px Breite */
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: small; /* Kleinere Schriftgröße für mobile Geräte */
+        padding: 10px; /* Weniger Padding */
+    }
+
+    .terminal {
+        width: 95vw; /* Breite auf 95% des Viewports setzen */
+        padding: 10px; /* Weniger Padding */
+    }
+
+    .bigAsciiArt {
+        font-size: large; /* Kleinere Schriftgröße für ASCII-Art */
+    }
+
+    .firstHelpText {
+        font-size: medium; /* Kleinere Schriftgröße */
+    }
+
+    input {
+        font-size: medium; /* Kleinere Schriftgröße für das Eingabefeld */
+    }
 }
-
-.barAbove {
-    width: 100%;
-    height: 30px;
-    background-color: rgba(211, 211, 211, 0.705);
-    border: solid 1px white;
-}
-
-.wholeTerminal {
-    width: 95vw;
-    margin: 2% 50px 0 50px;
-}
-
-.fakeButtons {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    border: 1px solid #000;
-    position: relative;
-    top: 3px;
-    left: 6px;
-    background-color: #ff3b47;
-    border-color: #9d252b;
-    display: inline-block;
-}
-
-.fakeButtons:hover {
-    transform: translateY(-3px) scale(1.05);
-}
-
-.fakeMinimize {
-    left: 11px;
-    background-color: #ffc100;
-    border-color: #9d802c;
-}
-
-.fakeZoom {
-    left: 16px;
-    background-color: #00d742;
-    border-color: #049931;
-}
-
-.fakeMenu {
-    width: 550px;
-    box-sizing: border-box;
-    height: 25px;
-    background-color: #bbb;
-    margin: 0 auto;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-

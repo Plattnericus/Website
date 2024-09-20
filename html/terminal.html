@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/schriften.css">
     <link rel="stylesheet" href="../css/terminal.css">
+    <link rel="stylesheet" href="../css/schriften.css">
         
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Terminal</title>
+
 </head>
 <body>
     <div id="canvas-container">
@@ -16,40 +16,29 @@
     <button id="zurueck-button" onclick="window.location.href='../index.html'">
         Zurück
     </button>
-    <div>  
-        <form class="four-oh-four-form" id="form">
-            <input type="text" class="404-input" id="input" />
-        </form>
-
-        <div class="wholeTerminal">
-            <div class="barAbove">
-                <div class="menu">
-                    <div class="fakeButtons fakeClose" id="fakeClose"></div>
-                    <div class="fakeButtons fakeMinimize" id="fakeMinimize"></div>
-                    <div class="fakeButtons fakeZoom" id="fakeZoom"></div>
-                </div>
-            </div>
-
-            <div class="terminal">
-                <p class="prompt2">
-
-___________                  .__              .__   
-\__    ___/__________  _____ |__| ____ _____  |  |  
-  |    |_/ __ \_  __ \/     \|  |/    \\__  \ |  |  
-  |    |\  ___/|  | \/  Y Y  \  |   |  \/ __ \|  |__
-  |____| \___  >__|  |__|_|  /__|___|  (____  /____/
-             \/            \/        \/     \/      
-
    
-                    </p>
-                <p class="prompt output new-output" id="output"></p>
-            </div>
+    <div class="terminal">
+        <pre class="bigAsciiArt">
+ _   _ _____ _____  __
+| \ | | ____/ _ \ \/ /
+|  \| |  _|| | | \  / 
+| |\  | |__| |_| /  \ 
+|_| \_|_____\___/_/\_\
+        </pre>
+        <p class="firstHelpText">Type "HELP" for help.</p>
+        <br>
+        <div class="output" id="output"></div>
+        <div class="input-line">
+            <span class="prompt" >user@host:~$</span>
+            <input type="text" id="input" autofocus autocomplete="off"/>
         </div>
     </div>
+    
+    <!-- Einbindung von jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="index.js"></script>
-
+    <!-- Haupt-JavaScript-Datei -->
     <script src="../javascript/terminal.js"></script>
+
 </body> 
 </html>  
- <!--by Ryhox and Nexor-->
+<!-- by Ryhox and Nexor -->
