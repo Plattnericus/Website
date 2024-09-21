@@ -127,17 +127,17 @@ $(document).ready(function() {
 function vacation() {
     const now = new Date().getTime();
     const events = [
-        { name: "Schulstart", date: new Date("Sep 05, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [05.09.24] Schulstart: Countdown complete.", upcomingMessage: "[❌] [2024] [05.09.24] Schulstart: " },
-        { name: "Allerheiligen", date: new Date("Nov 01, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [01.11.24] Allerheiligen: Countdown complete.", upcomingMessage: "[❌] [2024] [01.11.24] Allerheiligen: " },
-        { name: "Sant Ambrogio", date: new Date("Dec 07, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [07.12.24] Sant Ambrogio: Countdown complete.", upcomingMessage: "[❌] [2024] [07.12.24] Sant Ambrogio: " },
-        { name: "Weihnachtsferien", date: new Date("Dec 23, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [23.12.24] Weihnachtsferien: Countdown complete.", upcomingMessage: "[❌] [2024] [23.12.24] Weihnachtsferien: " },
-        { name: "Faschingsferien", date: new Date("Feb 10, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [10.02.25] Faschingsferien: Countdown complete.", upcomingMessage: "[❌] [2025] [10.02.25] Faschingsferien: " },
-        { name: "Osterferien", date: new Date("Apr 17, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [17.04.25] Osterferien: Countdown complete.", upcomingMessage: "[❌] [2025] [17.04.25] Osterferien: " },
-        { name: "Tag der Befreiung", date: new Date("Apr 25, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [25.04.25] Tag der Befreiung: Countdown complete.", upcomingMessage: "[❌] [2025] [25.04.25] Tag der Befreiung: " },
-        { name: "Tag der Arbeit", date: new Date("May 01, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [01.05.25] Tag der Arbeit: Countdown complete.", upcomingMessage: "[❌] [2025] [01.05.25] Tag der Arbeit: " },
-        { name: "Tag der Republik", date: new Date("Jun 02, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [02.06.25] Tag der Republik: Countdown complete.", upcomingMessage: "[❌] [2025] [02.06.25] Tag der Republik: " },
-        { name: "Pfingsten", date: new Date("Jun 08, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [08.06.25] Pfingsten: Countdown complete.", upcomingMessage: "[❌] [2025] [08.06.25] Pfingsten: " },
-        { name: "Schulende", date: new Date("Jun 13, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [13.06.25] Schulende: Countdown complete.", upcomingMessage: "[❌] [2025] [13.06.25] Schulende: " }
+        { name: "Schulstart", date: new Date("Sep 05, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [05.09.24] Schulstart: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [05.09.24] Schulstart: " },
+        { name: "Allerheiligen", date: new Date("Nov 01, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [01.11.24] Allerheiligen: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [01.11.24] Allerheiligen: " },
+        { name: "Sant Ambrogio", date: new Date("Dec 07, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [07.12.24] Sant Ambrogio: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [07.12.24] Sant Ambrogio: " },
+        { name: "Weihnachtsferien", date: new Date("Dec 23, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [23.12.24] Weihnachtsferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [23.12.24] Weihnachtsferien: " },
+        { name: "Faschingsferien", date: new Date("Feb 10, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [10.02.25] Faschingsferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [10.02.25] Faschingsferien: " },
+        { name: "Osterferien", date: new Date("Apr 17, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [17.04.25] Osterferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [17.04.25] Osterferien: " },
+        { name: "Tag der Befreiung", date: new Date("Apr 25, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [25.04.25] Tag der Befreiung: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [25.04.25] Tag der Befreiung: " },
+        { name: "Tag der Arbeit", date: new Date("May 01, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [01.05.25] Tag der Arbeit: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [01.05.25] Tag der Arbeit: " },
+        { name: "Tag der Republik", date: new Date("Jun 02, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [02.06.25] Tag der Republik: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [02.06.25] Tag der Republik: " },
+        { name: "Pfingsten", date: new Date("Jun 08, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [08.06.25] Pfingsten: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [08.06.25] Pfingsten: " },
+        { name: "Schulende", date: new Date("Jun 13, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [13.06.25] Schulende: Countdown <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [13.06.25] Schulende: " }
     ];
     
 
@@ -158,7 +158,7 @@ function vacation() {
             const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
 
-            output.innerHTML += `${event.upcomingMessage} ${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden.\n`;
+            output.innerHTML += `${event.upcomingMessage} <span style="color: red;">${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden.</span>\n`;
         }
     });
 
@@ -168,25 +168,35 @@ function vacation() {
 // Die Shutdown-Simulation
 function simulateShutdown(outputDiv) {
     const shutdownMessages = [
-        "[INFO] Starting shutdown sequence...",
-        "[OK] Stopping web server: apache2.",
-        "[OK] Stopping database server: mysql.",
-        "[OK] Stopping system logging service: rsyslog.",
-        "[OK] Stopping OpenSSH server: sshd.",
-        "[OK] Unmounting /dev/sda1...",
-        "[OK] Unmounting /dev/sdb1...",
-        "[OK] Flushing file systems...",
-        "[OK] Stopping remaining processes...",
-        "[INFO] Sending SIGTERM to remaining processes...",
-        "[INFO] Sending SIGKILL to remaining processes...",
-        "[OK] Unmounting remaining file systems...",
-        "[INFO] Deactivating swap...",
-        "[INFO] Powering off...",
-        "[INFO] Syncing file systems...",
-        "[OK] System will halt now.",
-        "[OK] System halted.",
-        "Powering off in 3... 2... 1...",
-        "[INFO] System has powered off."
+        "<span style=\"color: yellow;\">[INFO]</span> Starting shutdown sequence...",
+        "<span style=\"color: red;\">[ERROR]</span> Failed to stop web server: apache2. Unable to terminate the service, please check logs.",
+        "<span style=\"color: green;\">[OK]</span> Stopping web server: apache2.",
+        "<span style=\"color: green;\">[OK]</span> Stopping database server: mysql.",
+        "<span style=\"color: green;\">[OK]</span> Stopping system logging service: rsyslog.",
+        "<span style=\"color: green;\">[OK]</span> Stopping OpenSSH server: sshd.",
+        "<span style=\"color: green;\">[OK]</span> Unmounting /dev/sda1...",
+        "<span style=\"color: green;\">[OK]</span> Unmounting /dev/sdb1...",
+        "<span style=\"color: red;\">[ERROR]</span> Unable to unmount /dev/sda2. Device is busy or in use by another process.",
+        "<span style=\"color: green;\">[OK]</span> Flushing file systems...",
+        "<span style=\"color: green;\">[OK]</span> Stopping remaining processes...",
+        "<span style=\"color: yellow;\">[INFO]</span> Sending SIGTERM to remaining processes...",
+        "<span style=\"color: yellow;\">[INFO]</span> Sending SIGKILL to remaining processes...",
+        "<span style=\"color: green;\">[OK]</span> Unmounting remaining file systems...",
+        "<span style=\"color: yellow;\">[INFO]</span> Deactivating swap...",
+        "<span style=\"color: yellow;\">[INFO]</span> Powering off...",
+        "<span style=\"color: yellow;\">[INFO]</span> Syncing file systems...",
+        "<span style=\"color: green;\">[OK]</span> System will halt now.",
+        "<span style=\"color: green;\">[OK]</span> System halted.",
+        "<span style=\"color: yellow;\">[INFO]</span> Restarting system checks... Performing final diagnostics.",
+        "<span style=\"color: green;\">[OK]</span> Closing all active sessions... Ensuring user data is saved.",
+        "<span style=\"color: green;\">[OK]</span> Terminating background services... Cleaning up resources.",
+        "<span style=\"color: yellow;\">[INFO]</span> Running final synchronization... Ensuring no data is lost.",
+        "<span style=\"color: green;\">[OK]</span> Powering down peripherals... Disabling connected devices.",
+        "<span style=\"color: yellow;\">[INFO]</span> Finalizing shutdown... Preparing to cut power.",
+        "<span style=\"color: green;\">[OK]</span> All processes terminated successfully.",
+        "<span style=\"color: yellow;\">[INFO]</span> Awaiting power-off confirmation... Ensuring readiness.",
+        "Powering off...",
+        "<span style=\"color: yellow;\">[INFO]</span> <span style=\"color: green;\">System has powered off.</span>"
     ];
 
     let index = 0;
@@ -207,7 +217,7 @@ function simulateShutdown(outputDiv) {
         } else {
             setTimeout(() => {
                 window.location.href = "index.html"; // Nach der letzten Nachricht
-            }, 3000);
+            }, 300);
         }
     }
 
