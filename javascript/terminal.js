@@ -6,12 +6,12 @@ $(document).ready(function() {
     var str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     var drops = [];
     var columns;
-    var fallSpeed = 2; 
+    var fallSpeed = 2;
 
     // Historie für Befehle
     var commandHistory = [];
     var historyIndex = -1;
-    
+
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -54,52 +54,67 @@ $(document).ready(function() {
     document.addEventListener('click', function() {
         document.getElementById('input').focus();
     });
-    
+
     document.getElementById('input').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
+            let isRoot = false;
             event.preventDefault(); 
             const input = this.value.toLowerCase(); 
             const output = document.getElementById('output');
-    
-            const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
 
-            // Befehle verarbeiten
-            if (input === 'help') {
-                output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help, version, shutdown, clear, date, ip, todo, vacation\n`;
-            } else if (input === 'version') {
-                output.innerHTML += `${promptAndInput}\nVERSION 0.2\n`;
-            } else if (input === 'date') {
-                const currentDate = new Date(); 
-                const formattedDate = currentDate.toLocaleString();
-                output.innerHTML += `${promptAndInput}\n${formattedDate}\n`;
-            } else if (input === 'ip') {
-                fetch('https://api.ipify.org?format=json') 
-                    .then(response => response.json())
-                    .then(data => {
-                        const userIP = data.ip; 
-                        output.innerHTML += `${promptAndInput}\nYour IP: ${userIP}\n`; 
-                    })
-                    .catch(error => {
-                        output.innerHTML += `Error getting your IP address\n`;
-                        console.error('Error:', error);
-                    });
-            } else if (input === 'todo') {
-                output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:\nsiedersay STRING\nmensa\ncalc\nrandom INT\nrps\nvacation\n`;
-            } else if (input === 'vacation') {
-                vacation();
-            } else if (input === 'shutdown') {
-                output.innerHTML += `${promptAndInput}\n`;
-                simulateShutdown(output);
-            } else if (input === 'clear') {
-                output.innerHTML = ''; 
+            if (input === 'sudo su -') {
+                isRoot = true;
+                const promptAndInput = `<span class="prompt">root@debian:~$</span>${input}`;
+                output.innerHTML += `${promptAndInput}\ndu bist nun sudo\n`;
             } else {
-                output.innerHTML += `${promptAndInput}\n<span style="color: red;">COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
-            }
+                const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
 
+                // Befehle verarbeiten
+                if (input.startsWith('siedersay ')) {
+                    const input2 = input.substring('siedersay '.length);
+                    const cowsayOutput = formatCowsay(input2);
+                    output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
+                } else if (input === 'help') {
+                    output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help, 
+                    version, 
+                    shutdown, 
+                    clear, 
+                    date, 
+                    ip, vacation\n`;
+                } else if (input === 'version') {
+                    output.innerHTML += `${promptAndInput}\nVERSION 0.2\n`;
+                } else if (input === 'date') {
+                    const currentDate = new Date(); 
+                    const formattedDate = currentDate.toLocaleString();
+                    output.innerHTML += `${promptAndInput}\n${formattedDate}\n`;
+                } else if (input === 'ip') {
+                    fetch('https://api.ipify.org?format=json') 
+                        .then(response => response.json())
+                        .then(data => {
+                            const userIP = data.ip; 
+                            output.innerHTML += `${promptAndInput}\nYour IP: ${userIP}\n`; 
+                        })
+                        .catch(error => {
+                            output.innerHTML += `Error getting your IP address\n`;
+                            console.error('Error:', error);
+                        });
+                } else if (input === 'todo') {
+                    output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:\nsiedersay STRING\nmensa\ncalc\nrandom INT\nrps\nvacation\n`;
+                } else if (input === 'vacation') {
+                    vacation();
+                } else if (input === 'shutdown') {
+                    output.innerHTML += `${promptAndInput}\n`;
+                    simulateShutdown(output);
+                } else if (input === 'clear') {
+                    output.innerHTML = ''; 
+                } else {
+                    output.innerHTML += `${promptAndInput}\n<span style="color: red;">COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
+                }
+            }
             commandHistory.push(input);
             historyIndex = commandHistory.length; 
             this.value = '';
-    
+
             // Automatisch nach unten scrollen
             output.scrollTop = output.scrollHeight; // Scroll direkt nach dem Hinzufügen
         }
@@ -122,6 +137,41 @@ $(document).ready(function() {
         }
     });
 });
+
+function formatCowsay(text) {
+    return `
+#(#((((((((((((((((((((#%%#%&&&%%%%%%%#%##((((((////////////                                      
+(((((((((((((((###%%%%&@@@@@@&@@@@@@@@@&&&&&&%%##((((///////                                      
+(((((((((((##%%%&&&&@@@@@@@@@@@@@@@@@@@@@@&@@@&&&&%#(((/////                                      
+((((((((((##%&@@@@@&&@@@@@@@@@@@@@@@@@@@@@&&@@@@@@&&%#(((///                 @@@@@@@@                      
+((((((((((#%&&&&&&&&&&&&@@@@&&&&@@@@@@@@@@@@@@&&&@@@@&%##(//           @@@@           @@@@         
+(((((((((((#&&&&%%%&&&&&&&&%%&&&&&&&&&&%%&&@@@@@&%&@&&&%##(/       @@                        @@@    
+((((((((((##%#(%%%%#%%%%%%%%%#%%%%%%&&&&&@&&&&&&&&&&&&%%#((/    @@                               @  
+((((((/(((#####(((####%###%#####%&&&&&&&&@%%#%%%%%%%&&%%#(//  @@                                   @
+//////////(////**///((####(((##(%###(###%#%%##%%%((#%%###//* @                                      @
+/////////    ...,**//*//(((/(/(((((((/((((#(((((###(/,.#(//*@@                                       @
+////*         ..*/((#(((((////*////*////////(((((%(*     /**@            ${text}                    
+                 ...,,**/(((////////////((#%%%%%%((*       , @                                       @
+                 ,**%%&@#,,,,****//////(((//(##(/*,          (@                                     @
+                    */%&##&/*..,*//////#%%&&&//((,             @%                                 @@
+           (%&&&.    .,**//*,.. .*////((##((/****                @@                            ,@   
+         %&&&&@@@   ...,,,....   ,//////////****,                @                         @@@      
+        (%&&&&%%&&    ..,...     .//**////*****,                @,@@*     (@@@@@@@@@@@@@            
+         ,/#%%#%&##   ..,,,.     .*//**///****/              #@.                                    
+        */*((%%%&#%&,  .,,,     .,*///**//**,&%           (                                          
+     /(#/(%%(#%%&&@@&& .,,,,,.  ,***//*(//*/&&%%(/                                                  
+    (#####%#%#(%&&@@&&@#....,,*,,**/*/*&@&&%%%%%##.                                                
+   ,###%%#%(&&#%#%&&@&@@@& ..,**//////*&@&&&%%&%%%%%%#                                              
+   (#%%%%%%%&&&&#%#%&&@@@@@@,,,**/*//&&@&&&&&&&%%%%%%%/                                             
+  /##%%%%%&%&&&&&%&%#%&&&&@@@@@@@@@&&%&&&&&&&&&%%%%%%%%                                             
+  #%#%%%%%%%&&&&&%%&&&&&%&&&&&&@@&&&&&&&&&&&&&&%&%%%%%%                                             
+  /%&&(%&&#%%&&&&&%%%%&&&#&&&&&&&&&&&&&&&&&&&&&%&&&&&&%*                                             
+   %&%%#&&&%&&&&&%%%%&&&#&&&&&&&&&&&&&&&&&&&&&%&&&&&&&&%                                              
+   /%&&&&%%%&&&&&%%%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                               
+   //%&&&&&#%&&&&%%%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                                
+   (#%%%%%&(&&&&%(((#%#%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                                  
+`                                                
+}
 
 // Die Vacation-Funktion
 function vacation() {

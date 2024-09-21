@@ -1,0 +1,14 @@
+commands:
+    help
+    ip
+    vacation
+    shutdown
+    clear
+    date
+    version
+
+
+
+secret commands:
+    siedersay {text}
+    todo

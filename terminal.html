@@ -3,22 +3,17 @@
 <head>
     <link rel="stylesheet" href="css/terminal.css">
     <link rel="stylesheet" href="css/schriften.css">
-        
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal</title>
-
 </head>
 <body>
     <div id="canvas-container">
         <canvas id="canvas"></canvas>
     </div>
-    <button id="zurueck-button" onclick="window.location.href='index.html'">
-        Zurück
-    </button>
-   
+    <button id="zurueck-button" onclick="window.location.href='index.html'">Back</button>
     <div class="terminal">
-        <pre class="bigAsciiArt">
+        <pre class="bigAsciiArt"> 
  _   _ _____ _____  __
 | \ | | ____/ _ \ \/ /
 |  \| |  _|| | | \  / 
@@ -29,16 +24,12 @@
         <br>
         <div class="output" id="output"></div>
         <div class="input-line">
-            <span class="prompt" >user@host:~$</span>
+            <span class="prompt">user@host:~$</span>
             <input type="text" id="input" autofocus autocomplete="off"/>
         </div>
     </div>
-    
-    <!-- Einbindung von jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Haupt-JavaScript-Datei -->
     <script src="javascript/terminal.js"></script>
-
-</body> 
-</html>  
-<!-- by Ryhox and Nexor -->
+</body>
+</html>
+<!--by Ryhox and Nexor-->

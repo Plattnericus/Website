@@ -19,17 +19,19 @@ body {
 
 .terminal {
     padding: 20px;
-    width: 90vw; /* Breite auf 90% des Viewports setzen */
-    max-width: 1600px; /* Maximale Breite für größere Bildschirme */
-    height: auto; /* Höhe anpassen, um den Inhalt zu passen */
+    width: 90vw;
+    max-width: 1600px; 
+    height: auto;
     overflow-y: auto;
     float: left;
-    margin: 0 auto; /* Zentriert den Container */
+    margin: 0 auto;
 }
 
 .output {
     white-space: pre;
-    overflow-y: auto;
+    overflow: hidden; 
+    word-wrap: break-word; 
+    white-space: pre-wrap; 
 }
 
 .input-line {
@@ -109,31 +111,31 @@ input {
 /* Media Query für Bildschirme mit maximal 768px Breite */
 @media only screen and (max-width: 768px) {
     body {
-        font-size: small; /* Kleinere Schriftgröße für mobile Geräte */
-        padding: 10px; /* Weniger Padding */
+        font-size: small; 
+        padding: 10px; 
     }
 
     .terminal {
-        width: 95vw; /* Breite auf 95% des Viewports setzen */
-        padding: 10px; /* Weniger Padding */
+        width: 95vw;
+        padding: 10px;
     }
 
     .bigAsciiArt {
-        font-size: large; /* Größere Schriftgröße für ASCII-Art */
+        font-size: large;
     }
 
     .firstHelpText {
-        font-size: medium; /* Kleinere Schriftgröße */
+        font-size: medium;
     }
 
     input {
-        font-size: medium; /* Kleinere Schriftgröße für das Eingabefeld */
+        font-size: medium;
     }
 
     #output {
-        max-height: 400px; /* Maximale Höhe für den Ausgabebereich */
-        overflow: hidden; /* Überlaufende Inhalte ausblenden */
-        word-wrap: break-word; /* Lange Wörter umbrochen */
-        white-space: pre-wrap; /* Vorhandene Zeilenumbrüche beibehalten */
+        max-height: 400px;
+        overflow: hidden;
+        word-wrap: break-word;
+        white-space: pre-wrap; 
     }
 }
