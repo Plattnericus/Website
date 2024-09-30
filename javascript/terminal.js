@@ -70,7 +70,7 @@ $(document).ready(function() {
                 const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
 
                 // Befehle verarbeiten
-                if (input.startsWith('siedersay ')) {
+                if (input.startsWith('siggidysay ')) {
                     const input2 = input.substring('siedersay '.length);
                     const cowsayOutput = formatCowsay(input2);
                     output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;

@@ -10,5 +10,5 @@ commands:
 
 
 secret commands:
-    siedersay {text}
+    siggidy say {text}
     todo
