@@ -12,3 +12,4 @@ commands:
 secret commands:
     siggidy say {text}
     todo
+    siggidy random

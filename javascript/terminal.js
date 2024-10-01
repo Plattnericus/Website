@@ -55,23 +55,28 @@ $(document).ready(function() {
         document.getElementById('input').focus();
     });
 
+
+    //Terminal eingabefeld
+
+
     document.getElementById('input').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            let isRoot = false;
+        if (event.key === 'Enter') {     
             event.preventDefault(); 
             const input = this.value.toLowerCase(); 
             const output = document.getElementById('output');
+
 
             if (input === 'sudo su -') {
                 isRoot = true;
                 const promptAndInput = `<span class="prompt">root@debian:~$</span>${input}`;
                 output.innerHTML += `${promptAndInput}\ndu bist nun sudo\n`;
+                mainroot == true;
             } else {
                 const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
-
+            
                 // Befehle verarbeiten
-                if (input.startsWith('siggidysay ')) {
-                    const input2 = input.substring('siedersay '.length);
+                if (input.startsWith('siggidy say ')) {
+                    const input2 = input.substring('siggidy say '.length);
                     const cowsayOutput = formatCowsay(input2);
                     output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
                 } else if (input === 'help') {
@@ -80,7 +85,8 @@ $(document).ready(function() {
                     shutdown, 
                     clear, 
                     date, 
-                    ip, vacation\n`;
+                    ip, 
+                    vacation\n`;
                 } else if (input === 'version') {
                     output.innerHTML += `${promptAndInput}\nVERSION 0.2\n`;
                 } else if (input === 'date') {
@@ -107,7 +113,17 @@ $(document).ready(function() {
                     simulateShutdown(output);
                 } else if (input === 'clear') {
                     output.innerHTML = ''; 
-                } else {
+                } else if (input.trim() === '') {                     
+                    output.innerHTML += `${promptAndInput}\n`;
+                } else if (input === 'siggidy random') {
+                    output.innerHTML += `${promptAndInput}\n`;
+                    displayRandomContent();
+                }
+                
+                
+                
+                
+                else {
                     output.innerHTML += `${promptAndInput}\n<span style="color: red;">COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
                 }
             }
@@ -138,6 +154,27 @@ $(document).ready(function() {
     });
 });
 
+
+const scrollableDiv = document.getElementById('scrollableDiv');
+
+inputField.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' && inputField.value.trim() !== '') {
+    // Neuen Text als <div> hinzufügen
+    const newMessage = document.createElement('div');
+    newMessage.className = 'message';
+    newMessage.textContent = inputField.value;
+    scrollableDiv.appendChild(newMessage);
+
+    // Scrollen, damit der neu hinzugefügte Text sichtbar ist
+    scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+
+    // Input-Feld leeren
+    inputField.value = '';
+  }
+});
+
+
+
 function formatCowsay(text) {
     return `
 #(#((((((((((((((((((((#%%#%&&&%%%%%%%#%##((((((////////////                                      
@@ -150,7 +187,7 @@ function formatCowsay(text) {
 ((((((/(((#####(((####%###%#####%&&&&&&&&@%%#%%%%%%%&&%%#(//  @@                                   @
 //////////(////**///((####(((##(%###(###%#%%##%%%((#%%###//* @                                      @
 /////////    ...,**//*//(((/(/(((((((/((((#(((((###(/,.#(//*@@                                       @
-////*         ..*/((#(((((////*////*////////(((((%(*     /**@            ${text}                    
+////*         ..*/((#(((((////*////*////////(((((%(*     /**@  ${text}                    
                  ...,,**/(((////////////((#%%%%%%((*       , @                                       @
                  ,**%%&@#,,,,****//////(((//(##(/*,          (@                                     @
                     */%&##&/*..,*//////#%%&&&//((,             @%                                 @@
@@ -272,4 +309,22 @@ function simulateShutdown(outputDiv) {
     }
 
     displayNextMessage();
+}
+
+// Funktion zur zufälligen Ausgabe von Text oder Bild
+function displayRandomContent() {
+    const randomItems = [             
+        "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \n\nMein schwarzes Schwein heißt Leon",
+        "Zufälliger Text: Du schaffst das!",
+        "<img src='../pictures/sieder1.png' alt='Random Image'>",
+        "<img src='https://via.placeholder.com/200' alt='Random Image'>",
+        "Zufälliger Text: Bleib stark!",
+        "<img src='https://via.placeholder.com/100' alt='Random Image'>"
+    ];
+
+    const randomIndex = Math.floor(Math.random() * randomItems.length);
+    const output = document.getElementById('output');
+    
+    // Ausgabe des zufälligen Inhalts ohne andere Texte zu überschreiben
+    output.innerHTML += `${randomItems[randomIndex]}\n`;
 }
