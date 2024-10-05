@@ -1,11 +1,13 @@
 commands:
-    help
-    ip
-    vacation
-    shutdown
-    clear
-    date
-    version
+    help                                     -   THIS LIST
+    version                                  -   TERMINAL VERSION
+    shutdown                                 -   SHUTDOWN TERMINAL
+    clear                                    -   CLEARS CONSOLE
+    date                                     -   DATE AND TIME
+    ip                                       -   YOUR IP
+    vacation                                 -   SCHOOL VACATIONS
+    calc (NUMBER) (OPERATOR) (NUMBER)        -   CALCULATOR
+    random (NUMBER)                          -   RANDOM NUMBERS
 
 
 

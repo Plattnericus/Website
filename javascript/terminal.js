@@ -64,69 +64,129 @@ $(document).ready(function() {
             event.preventDefault(); 
             const input = this.value.toLowerCase(); 
             const output = document.getElementById('output');
-
-
-            if (input === 'sudo su -') {
-                isRoot = true;
-                const promptAndInput = `<span class="prompt">root@debian:~$</span>${input}`;
-                output.innerHTML += `${promptAndInput}\ndu bist nun sudo\n`;
-                mainroot == true;
-            } else {
-                const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
+    
+            const promptAndInput = `<span style=\"color: green;\">user@host:~$ </span>${input}`; 
+    
+            if (input.startsWith('siggidysay ')) {
+                const input2 = input.substring('siggidysay '.length);
+                const cowsayOutput = formatCowsay(input2);
+                output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
+            } else if (input === 'help') {
+                output.innerHTML += `${promptAndInput}\nAvailable Commands:\nhelp - THIS LIST\nversion - TERMINAL VERSION\nshutdown - SHUTDOWN TERMINAL\nclear - CLEARS CONSOLE\ndate - DATE AND TIME\nip - YOUR IP\nvacation - SCHOOL VACATIONS\ncalc (NUMBER) (OPERATOR) (NUMBER) - CALCULATOR\nrandom (NUMBER) - RANDOM NUMBERS\n`;
+            } else if (input === 'version') {
+                output.innerHTML += `${promptAndInput}\nVERSION 0.5\n`;
+            } else if (input === 'date') {
+                const currentDate = new Date(); 
+                const formattedDate = currentDate.toLocaleString();
+                output.innerHTML += `${promptAndInput}\n${formattedDate}\n`;
+            } else if (input === 'ip') {
+                fetch('https://api.ipify.org?format=json') 
+                    .then(response => response.json())
+                    .then(data => {
+                        const userIP = data.ip; 
+                        output.innerHTML += `${promptAndInput}\nYour IP: ${userIP}\n`; 
+                    })
+                    .catch(error => {
+                        output.innerHTML += `${promptAndInput}\nError getting your IP address\n`;
+                        console.error('Error:', error);
+                    });
+            } else if (input === 'todo') {
+                output.innerHTML += `${promptAndInput}\nCOMMANDS THAT STILL NEED TO BE PROGRAMMED:\nmensa\n`;
+            } else if (input === 'vacation') {
+                vacation(); // Ensure vacation() is defined elsewhere
+            } else if (input === 'shutdown') {
+                output.innerHTML += `${promptAndInput}\n`;
+                simulateShutdown(output); // Ensure simulateShutdown() is defined elsewhere
+            } else if (input === 'clear') {
+                output.innerHTML = ''; 
+            } else if (input.trim() === '') {                     
+                output.innerHTML += `${promptAndInput}\n`;
+            } else if (input === 'siggidy random') {
+                output.innerHTML += `${promptAndInput}\n`;
+                displayRandomContent(); // Ensure displayRandomContent() is defined elsewhere
+            } else if (input.startsWith('calc ')) {
+                const calculation = input.substring('calc '.length).trim();
+                const calcMatch = calculation.match(/^(\d+)\s*([\+\-\*\/])\s*(\d+)$/);
             
-                // Befehle verarbeiten
-                if (input.startsWith('siggidy say ')) {
-                    const input2 = input.substring('siggidy say '.length);
-                    const cowsayOutput = formatCowsay(input2);
-                    output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
-                } else if (input === 'help') {
-                    output.innerHTML += `${promptAndInput}\nVerfügbare Befehle: help, 
-                    version, 
-                    shutdown, 
-                    clear, 
-                    date, 
-                    ip, 
-                    vacation\n`;
-                } else if (input === 'version') {
-                    output.innerHTML += `${promptAndInput}\nVERSION 0.2\n`;
-                } else if (input === 'date') {
-                    const currentDate = new Date(); 
-                    const formattedDate = currentDate.toLocaleString();
-                    output.innerHTML += `${promptAndInput}\n${formattedDate}\n`;
-                } else if (input === 'ip') {
-                    fetch('https://api.ipify.org?format=json') 
-                        .then(response => response.json())
-                        .then(data => {
-                            const userIP = data.ip; 
-                            output.innerHTML += `${promptAndInput}\nYour IP: ${userIP}\n`; 
-                        })
-                        .catch(error => {
-                            output.innerHTML += `Error getting your IP address\n`;
-                            console.error('Error:', error);
-                        });
-                } else if (input === 'todo') {
-                    output.innerHTML += `${promptAndInput}\nBEFEHLE DIE MAN NOCH PROGRAMMIEREN MUSS:\nsiedersay STRING\nmensa\ncalc\nrandom INT\nrps\nvacation\n`;
-                } else if (input === 'vacation') {
-                    vacation();
-                } else if (input === 'shutdown') {
-                    output.innerHTML += `${promptAndInput}\n`;
-                    simulateShutdown(output);
-                } else if (input === 'clear') {
-                    output.innerHTML = ''; 
-                } else if (input.trim() === '') {                     
-                    output.innerHTML += `${promptAndInput}\n`;
-                } else if (input === 'siggidy random') {
-                    output.innerHTML += `${promptAndInput}\n`;
-                    displayRandomContent();
+                if (calcMatch) {
+                    const number1 = parseFloat(calcMatch[1]);  
+                    const operator = calcMatch[2];             
+                    const number2 = parseFloat(calcMatch[3]);  
+                    let result;
+            
+                    switch (operator) {
+                        case '+':
+                            result = number1 + number2;
+                            break;
+                        case '-':
+                            result = number1 - number2;
+                            break;
+                        case '*':
+                            result = number1 * number2;
+                            break;
+                        case '/':
+                            result = number2 !== 0 ? number1 / number2 : '<span style="color: red;">ERROR: YOU CAN\'T DO THAT!</span>';
+                            break;
+                        default:
+                            result = '<span style="color: red;">ERROR: UNKNOWN OPERATOR USE ONE OF THESE: `+, -, *, /`</span>';
+                    }
+            
+                    output.innerHTML += `${promptAndInput}\nANSWER: ${result}\n`;
+                } else {
+                    output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: USE SOMETHING LIKE 'calc 5 + 3'</span>\n`;
                 }
-                
-                
-                
-                
-                else {
-                    output.innerHTML += `${promptAndInput}\n<span style="color: red;">COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
+            } else if (input.startsWith('random ')) {
+                let parts = input.split(' ');
+                let number = parseInt(parts[1]);
+            
+                if (isNaN(number)) {
+                    output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: PLEASE TYPE IN A NUMBER</span>\n`;
+                } else if (number < 1) {
+                    output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: THE NUMBER SHOULD BE AT LEAST 1</span>\n`;
+                } else {
+                    let randomNumber = Math.floor(Math.random() * number + 1);
+                    output.innerHTML += `${promptAndInput}\nRANDOM NUMBER BETWEEN 1 and ${number}: ${randomNumber}\n`;
                 }
+            } else if (input.startsWith('rps ')) {
+                let parts = input.split(' ');
+                let numberCOMPUTER = Math.floor(Math.random() * 3);
+                const rps = parts[1];
+                switch(rps) {
+                    case 'scissors':
+                        if (numberCOMPUTER === 0) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE SCISSORS TOO: DRAW\n`;   
+                        } else if (numberCOMPUTER === 1) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE PAPER: YOU WON\n`;   
+                        } else if (numberCOMPUTER === 2) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE ROCK: YOU LOST\n`;   
+                        }
+                        break;
+                    case 'paper':
+                        if (numberCOMPUTER === 0) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE SCISSORS: YOU LOST\n`;   
+                        } else if (numberCOMPUTER === 1) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE PAPER TOO: DRAW\n`;   
+                        } else if (numberCOMPUTER === 2) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE ROCK: YOU WON\n`;   
+                        }
+                        break;                        
+                    case 'rock':
+                        if (numberCOMPUTER === 0) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE SCISSORS: YOU WON\n`;   
+                        } else if (numberCOMPUTER === 1) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE PAPER: YOU LOST\n`;   
+                        } else if (numberCOMPUTER === 2) {
+                            output.innerHTML += `${promptAndInput}\nTHE COMPUTER CHOSE ROCK TOO: DRAW\n`;   
+                        }
+                        break;
+                    default:     
+                        output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: TRY 'rps (rock/paper/scissors)'</span>\n`;      
+                }
+            } else {
+                output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
             }
+        
+        
             commandHistory.push(input);
             historyIndex = commandHistory.length; 
             this.value = '';
@@ -326,11 +386,15 @@ function simulateShutdown(outputDiv) {
 // Funktion zur zufälligen Ausgabe von Text oder Bild
 function displayRandomContent() {
     const randomItems = [             
-        "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \n\nMein schwarzes Schwein heißt Leon",
+        "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \nMein schwarzes Schwein heißt Leon",
         "io cago nel salotto",
         "Wie sagt man, ??? eeeehmm ...",
+        "Teacher: Was ist die Absicht von Donald Trump?\n\nSiggidy: Atombombe!\n\nTeacher: Siggidy, das ist jetzt nicht passend zum Unterricht!! ab zum Nachsitzen und danach gibt es ein Gespräch mit dem Direktor!!",
 
-        "<img src='../pictures/sieder/' alt='Random Image'>",
+        "<img src='pictures/sieder/dasiggidy.png' alt='\n\nDaSiggidy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his Finger' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyhome.png' alt='\n\nHome of Siggiyy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyyyy.png' alt='\n\nJust Siggidy' width='250px' height='250px'>",
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);

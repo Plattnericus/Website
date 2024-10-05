@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette</title>
+    <link rel="icon" type="image/png" href="./pictures/roulette.png">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/roulette.css">
+</head>
+<body>
+    <header>
+        <h1>Roulette</h1>
+    </header>
+
+    <main>
+        <div id="score-container">
+            <h2>Punkte: <span id="score">100</span>$</h2>
+        </div>
+
+        <div id="betting-container">
+            <label for="bet-amount">Setze Punkte:</label>
+            <input type="number" id="bet-amount" min="1" max="100" value="10">
+            <div class="bet-buttons">
+                <button class="bet-button" data-color="red">Setze auf Rot</button>
+                <button class="bet-button" data-color="black">Setze auf Schwarz</button>
+            </div>
+        </div>
+
+        <div id="roulette-container">
+            <div id="wheel-wrapper">
+                <img id="roulette-wheel" src="pictures/roulette-wheel.png" alt="Roulette Rad">
+                <div id="roulette-ball"></div> <!-- Ball hinzugefügt -->
+            </div>
+            <div id="result" class="hidden">Ergebnis: <span id="result-number"></span></div>
+        </div>
+    </main>
+
+    <button id="zurueck-button" onclick="window.location.href='gambling.html'">
+        Back
+    </button>
+<script src="javascript/roulette.js"></script>
+</body>
+</html>

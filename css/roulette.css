@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0f0f0f;
+    color: #ffffff;
+    text-align: center;
+}
+
+header {
+    background-color: green; /* Dunkelrot für die Kopfzeile */
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+#score-container {
+    margin: 20px 0;
+}
+
+#betting-container {
+    margin: 20px 0;
+}
+
+input {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.bet-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.bet-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bet-button:hover {
+    background-color: rgb(6, 197, 6);
+}
+
+#roulette-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+#wheel-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#roulette-wheel {
+    width: 300px; /* Breite des Roulette-Rads */
+    transition: transform 1s;
+}
+
+#roulette-ball {
+    position: absolute;
+    width: 16px; /* Ballgröße */
+    height: 16px;
+    background-color: white; /* Ballfarbe */
+    border-radius: 50%; /* Ball rund */
+    top: 50%; /* Vertikale Position */
+    left: 50%; /* Horizontale Position */
+    transform: translate(-50%, -50%); /* Zentrale Positionierung */
+    transition: all 1s; /* Sanfter Übergang */
+}
+
+.hidden {
+    display: none;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em; /* Kleinere Schriftgröße für mobile Geräte */
+    }
+
+    #roulette-wheel {
+        width: 80%; /* Rad breiter für mobile Geräte */
+    }
+
+    input {
+        width: 60%; /* Eingabefeld breiter */
+    }
+
+    .bet-button {
+        padding: 8px 16px; /* Kleinere Buttons */
+        font-size: 1em; /* Kleinere Schriftgröße für Buttons */
+    }
+
+    #result {
+        font-size: 1.2em; /* Kleinere Schriftgröße für das Ergebnis */
+    }
+}

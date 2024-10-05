@@ -1,12 +1,11 @@
-body{
+/* Grundlegendes Body-Design */
+body {
     margin: 0;
     padding: 0;
     background-color: #0f0f0f;
 }
 
-
-
-/* Zurück Button*/ 
+/* Zurück Button */
 #zurueck-button {
     display: flex;
     bottom: 20px;
@@ -20,27 +19,113 @@ body{
     align-items: center;
     justify-content: center;
     border-radius: 3px;
-    background-color:#121212;
+    background-color: #121212;
     letter-spacing: 1px;
     transition: all 0.2s linear;
     cursor: pointer;
     border: none;
     color: #12c600;
-   }
-   
-   #zurueck-button > svg {
+}
+
+#zurueck-button > svg {
     margin-right: 5px;
     margin-left: 5px;
     font-size: 20px;
     transition: all 0.4s ease-in;
-   }
-   
-   #zurueck-button:hover > svg {
+}
+
+#zurueck-button:hover > svg {
     font-size: 1.2em;
     transform: translateX(-5px);
-   }
-   
-   #zurueck-button:hover {
+}
+
+#zurueck-button:hover {
     box-shadow: 9px 9px 33px #12c600, -9px -9px 33px #12c600;
     transform: translateY(-2px);
-   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* BlackJack CSS */
+header {
+    background-color: green; /* Dunkelrot für die Kopfzeile */
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 6vh;
+}
+h1 {
+    font-size: 2.5em;
+}
+#dealer-cards img,
+#your-cards img {
+    height: 175px;
+    width: 125px;
+    margin: 1px;
+}
+
+#hit, #stay {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+
+/* Center-Element */
+#center {
+    max-width: 600px; /* Begrenzte maximale Breite */
+    margin: 0 auto; /* Zentriert das Div */
+    padding: 20px;
+    text-align: center;
+    background-color: #121212;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Query für mobile Geräte */
+@media (max-width: 600px) {
+    header {
+        display: none;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #0f0f0f;
+        margin-top: 10px;
+    }
+    
+    #center {
+        width: 90%; /* Breite auf 90% des Bildschirms reduziert */
+        padding: 10px;
+    }
+
+    #dealer-cards img,
+    #your-cards img {
+        height: 120px; /* Kleinere Kartengröße für mobile Geräte */
+        width: 85px;
+    }
+
+    #hit, #stay {
+        width: 80px; /* Buttons werden schmaler für mobile Geräte */
+        height: 40px;
+        font-size: 16px;
+    }
+
+    /* Zurück-Button bleibt responsive */
+    #zurueck-button {
+        width: 80px;
+        height: 40px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
