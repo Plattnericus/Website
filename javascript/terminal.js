@@ -331,14 +331,6 @@ function displayRandomContent() {
         "Wie sagt man, ??? eeeehmm ...",
 
         "<img src='../pictures/sieder/' alt='Random Image'>",
-=======
-        "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \nMein schwarzes Schwein heißt Leon",
-        "Zufälliger Text: Du schaffst das!",
-        "<img src='../pictures/sieder1.png' alt='Random Image'>",
-        "<img src='https://via.placeholder.com/200' alt='Random Image'>",
-        "Zufälliger Text: Bleib stark!",
-        "<img src='https://via.placeholder.com/100' alt='Random Image'>"
->>>>>>> 98a2c4dd3cb5ca1598de701eb0247916c080f30d
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);
