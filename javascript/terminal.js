@@ -177,6 +177,7 @@ inputField.addEventListener('keydown', function(event) {
 
 function formatCowsay(text) {
     return `
+<div style="font-family: monospace; white-space: pre; /* Verhindert Zeilenumbruch und behält Leerzeichen bei */overflow-x: auto; /* Ermöglicht horizontales Scrollen, falls notwendig */max-width: 100%; /* Passt das div an die Bildschirmgröße an */">
 #(#((((((((((((((((((((#%%#%&&&%%%%%%%#%##((((((////////////                                      
 (((((((((((((((###%%%%&@@@@@@&@@@@@@@@@&&&&&&%%##((((///////                                      
 (((((((((((##%%%&&&&@@@@@@@@@@@@@@@@@@@@@@&@@@&&&&%#(((/////                                      
@@ -206,7 +207,18 @@ function formatCowsay(text) {
    %&%%#&&&%&&&&&%%%%&&&#&&&&&&&&&&&&&&&&&&&&&%&&&&&&&&%                                              
    /%&&&&%%%&&&&&%%%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                               
    //%&&&&&#%&&&&%%%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                                
-   (#%%%%%&(&&&&%(((#%#%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                                                  
+   (#%%%%%&(&&&&%(((#%#%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&  
+    </div>
+
+    <style>
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            div {
+                max-width: 100%; /* Div nimmt die volle Breite des Bildschirms ein */
+                overflow-x: auto; /* Ermöglicht horizontales Scrollen auf kleinen Bildschirmen */
+            }
+        }
+    </style>
 `                                                
 }
 
@@ -315,11 +327,10 @@ function simulateShutdown(outputDiv) {
 function displayRandomContent() {
     const randomItems = [             
         "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \n\nMein schwarzes Schwein heißt Leon",
-        "Zufälliger Text: Du schaffst das!",
-        "<img src='../pictures/sieder1.png' alt='Random Image'>",
-        "<img src='https://via.placeholder.com/200' alt='Random Image'>",
-        "Zufälliger Text: Bleib stark!",
-        "<img src='https://via.placeholder.com/100' alt='Random Image'>"
+        "io cago nel salotto",
+        "Wie sagt man, ??? eeeehmm ...",
+
+        "<img src='../pictures/sieder/' alt='Random Image'>",
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);
