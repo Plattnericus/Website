@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wörterbuch</title>
+    <link rel="stylesheet" href="css/tenses-list.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wörterbuch</h1>
+        <div id="menu">
+            <button onclick="showAddWords()">Wörter hinzufügen</button>
+            <button onclick="showAskWords()">Wörter abfragen</button>
+        </div>
+        <div id="add-words" class="hidden">
+            <h2>Wörter hinzufügen</h2>
+            <input type="text" id="english-word" placeholder="Englisches Wort">
+            <input type="text" id="german-word" placeholder="Deutsches Wort">
+            <button onclick="addWord()">Hinzufügen</button>
+        </div>
+        <div id="ask-words" class="hidden">
+            <h2>Wörter abfragen</h2>
+            <select id="mode-select">
+                <option value="deutschToEnglish">Deutsch -> Englisch</option>
+                <option value="englishToDeutsch">Englisch -> Deutsch</option>
+                <option value="random">Zufällig abwechselnd</option>
+            </select>
+            <button onclick="startQuiz()">Starten</button>
+            <div id="quiz" class="hidden">
+                <p id="question"></p>
+                <input type="text" id="answer" placeholder="Antwort">
+                <button onclick="checkAnswer()">Überprüfen</button>
+                <p id="result"></p>
+            </div>
+        </div>
+    </div>
+    <script src="javascript/tenses-list.js"></script>
+</body>
+</html>
