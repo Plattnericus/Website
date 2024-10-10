@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    /* Canvas-Animation für "Letters Dropping" */
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var fontSize = 16;
@@ -8,7 +7,6 @@ $(document).ready(function() {
     var columns;
     var fallSpeed = 2;
 
-    // Historie für Befehle
     var commandHistory = [];
     var historyIndex = -1;
 
@@ -72,9 +70,9 @@ $(document).ready(function() {
                 const cowsayOutput = formatCowsay(input2);
                 output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
             } else if (input === 'help') {
-                output.innerHTML += `${promptAndInput}\nAvailable Commands:\nhelp - THIS LIST\nversion - TERMINAL VERSION\nshutdown - SHUTDOWN TERMINAL\nclear - CLEARS CONSOLE\ndate - DATE AND TIME\nip - YOUR IP\nvacation - SCHOOL VACATIONS\ncalc (NUMBER) (OPERATOR) (NUMBER) - CALCULATOR\nrandom (NUMBER) - RANDOM NUMBERS\n`;
+                output.innerHTML += `${promptAndInput}\nAvailable Commands:\nhelp - THIS LIST\nversion - TERMINAL VERSION\nshutdown - SHUTDOWN TERMINAL\nclear - CLEARS CONSOLE\ndate - DATE AND TIME\nip - YOUR IP\nvacation - SCHOOL VACATIONS\ncalc (NUMBER) (OPERATOR) (NUMBER) - CALCULATOR\nrandom (NUMBER) - RANDOM NUMBERS\ntimetable - This is the Timetable of the BFS FI 2\n`;
             } else if (input === 'version') {
-                output.innerHTML += `${promptAndInput}\nVERSION 0.5\n`;
+                output.innerHTML += `${promptAndInput}\nVERSION 0.69\n`;
             } else if (input === 'date') {
                 const currentDate = new Date(); 
                 const formattedDate = currentDate.toLocaleString();
@@ -92,18 +90,21 @@ $(document).ready(function() {
                     });
             } else if (input === 'todo') {
                 output.innerHTML += `${promptAndInput}\nCOMMANDS THAT STILL NEED TO BE PROGRAMMED:\nmensa\n`;
-            } else if (input === 'vacation') {
-                vacation(); // Ensure vacation() is defined elsewhere
+            } else if (input === 'timetable') {
+                
+                asciiTimetable();
+            }else if (input === 'vacation') {
+                vacation(); 
             } else if (input === 'shutdown') {
                 output.innerHTML += `${promptAndInput}\n`;
-                simulateShutdown(output); // Ensure simulateShutdown() is defined elsewhere
+                simulateShutdown(output);
             } else if (input === 'clear') {
                 output.innerHTML = ''; 
             } else if (input.trim() === '') {                     
                 output.innerHTML += `${promptAndInput}\n`;
             } else if (input === 'siggidy random') {
                 output.innerHTML += `${promptAndInput}\n`;
-                displayRandomContent(); // Ensure displayRandomContent() is defined elsewhere
+                displayRandomContent(); 
             } else if (input.startsWith('calc ')) {
                 const calculation = input.substring('calc '.length).trim();
                 const calcMatch = calculation.match(/^(\d+)\s*([\+\-\*\/])\s*(\d+)$/);
@@ -191,8 +192,7 @@ $(document).ready(function() {
             historyIndex = commandHistory.length; 
             this.value = '';
 
-            // Automatisch nach unten scrollen
-            output.scrollTop = output.scrollHeight; // Scroll direkt nach dem Hinzufügen
+            output.scrollTop = output.scrollHeight;
         }
     });
 
@@ -219,20 +219,74 @@ const scrollableDiv = document.getElementById('scrollableDiv');
 
 inputField.addEventListener('keydown', function(event) {
   if (event.key === 'Enter' && inputField.value.trim() !== '') {
-    // Neuen Text als <div> hinzufügen
     const newMessage = document.createElement('div');
     newMessage.className = 'message';
     newMessage.textContent = inputField.value;
     scrollableDiv.appendChild(newMessage);
 
-    // Scrollen, damit der neu hinzugefügte Text sichtbar ist
     scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
 
-    // Input-Feld leeren
     inputField.value = '';
   }
 });
 
+
+function asciiTimetable() {
+    const output = document.getElementById('output');
+    const input = document.getElementById('input').value.toLowerCase();
+    const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
+ 
+
+    const timetableData = {
+        "Montag": ["M1-M3", "M1-M3", "M1-M3", "M1-M3", "Rel", "Deu", "", "M4", "M4", "M4"],
+        "Dienstag": ["Mathe", "Mathe", "Eng", "M1-M3", "M1-M3", "M1-M3"],
+        "Mittwoch": ["Eng", "Ital", "M1-M3", "M1-M3", "GK-ZG", "", "M4", "M4"],
+        "Donnerstag": ["Sport", "Sport", "Deu", "Deu", "Mathe", "", "M1-M3", "M1-M3", "M1-M3", "M1-M3"],
+        "Freitag": ["Ital", "Ital", "GK-ZG", "Eng", "Eng"]
+    };
+
+    const weekDates = getWeekDates();
+    const days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
+    const times = ["07:50", "08:40", "09:30", "10:35", "11:25", "12:15", "13:15", "14:05", "15:05", "15:55"];
+    const cellWidth = 19; 
+
+    output.innerHTML = `${promptAndInput}\n+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n`;
+    output.innerHTML += "|       Zeit        |      Montag       |     Dienstag      |     Mittwoch      |    Donnerstag     |      Freitag      |\n";
+
+    output.innerHTML += "|                   ";
+    for (let i = 0; i < 5; i++) {
+        output.innerHTML += "|       " + weekDates[i] + "       ";
+    }
+    output.innerHTML += "|\n";
+    output.innerHTML += "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n";
+
+    for (let i = 0; i < times.length; i++) {
+        output.innerHTML += `|       ${times[i]}       `;
+        days.forEach(day => {
+            let subject = timetableData[day]?.[i] || ""; 
+            let paddedSubject = subject.padStart((cellWidth + subject.length) / 2).padEnd(cellWidth, ' '); 
+            output.innerHTML += `|${paddedSubject}`;
+        });
+        output.innerHTML += "|\n";
+        output.innerHTML += "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n";
+    }
+
+}
+
+function getWeekDates() {
+    const today = new Date();
+    const weekStart = today.getDate() - today.getDay() + 1; 
+    const weekDates = [];
+
+    for (let i = 0; i < 5; i++) { 
+        const date = new Date(today.setDate(weekStart + i));
+        const day = String(date.getDate()).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        weekDates.push(`${day}.${month}`);
+    }
+
+    return weekDates;
+}
 
 
 function formatCowsay(text) {
@@ -282,7 +336,6 @@ function formatCowsay(text) {
 `                                                
 }
 
-// Die Vacation-Funktion
 function vacation() {
     const now = new Date().getTime();
     const events = [
@@ -324,7 +377,6 @@ function vacation() {
     output.scrollTop = output.scrollHeight;  
 }
 
-// Die Shutdown-Simulation
 function simulateShutdown(outputDiv) {
     const shutdownMessages = [
         "<span style=\"color: yellow;\">[INFO]</span> Starting shutdown sequence...",
@@ -361,21 +413,20 @@ function simulateShutdown(outputDiv) {
     let index = 0;
 
     function displayNextMessage() {
-        const outputDiv = document.getElementById('output'); // Output Div
+        const outputDiv = document.getElementById('output'); 
     
         if (index < shutdownMessages.length) {
             outputDiv.innerHTML += `<p>${shutdownMessages[index]}</p>`;
 
-            // Automatisch nach unten scrollen
             setTimeout(function() {
                 outputDiv.scrollTop = outputDiv.scrollHeight;
             }, 10);
             
             index++;
-            setTimeout(displayNextMessage, 200); // Weiter mit der nächsten Nachricht
+            setTimeout(displayNextMessage, 200);
         } else {
             setTimeout(() => {
-                window.location.href = "index.html"; // Nach der letzten Nachricht
+                window.location.href = "index.html"; 
             }, 300);
         }
     }
@@ -383,23 +434,85 @@ function simulateShutdown(outputDiv) {
     displayNextMessage();
 }
 
-// Funktion zur zufälligen Ausgabe von Text oder Bild
 function displayRandomContent() {
-    const randomItems = [             
+    const randomItems = [
         "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \nMein schwarzes Schwein heißt Leon",
         "io cago nel salotto",
         "Wie sagt man, ??? eeeehmm ...",
         "Teacher: Was ist die Absicht von Donald Trump?\n\nSiggidy: Atombombe!\n\nTeacher: Siggidy, das ist jetzt nicht passend zum Unterricht!! ab zum Nachsitzen und danach gibt es ein Gespräch mit dem Direktor!!",
-
         "<img src='pictures/sieder/dasiggidy.png' alt='\n\nDaSiggidy' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his Finger' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his looooong Finger' width='250px' height='250px'>",
         "<img src='pictures/sieder/siggidyhome.png' alt='\n\nHome of Siggiyy' width='250px' height='250px'>",
         "<img src='pictures/sieder/siggidyyyy.png' alt='\n\nJust Siggidy' width='250px' height='250px'>",
+
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/siggidy-main.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0 
+        },
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/Schuhe-schnueffeln.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0 
+        },
+        {
+            type: 'video',
+            src: 'pictures/sexy-rock.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0
+        },
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/siggidy-edit.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0
+        }
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);
     const output = document.getElementById('output');
     
-    // Ausgabe des zufälligen Inhalts ohne andere Texte zu überschreiben
-    output.innerHTML += `${randomItems[randomIndex]}\n`;
+    const selectedItem = randomItems[randomIndex];
+    
+    if (typeof selectedItem === 'string') {
+        output.innerHTML += `${selectedItem}\n`;
+    } else if (selectedItem.type === 'video') {
+        const video = document.createElement('video');
+        video.setAttribute('width', selectedItem.width);
+        video.setAttribute('height', selectedItem.height);
+        video.setAttribute('loop', 'true');
+        video.setAttribute('autoplay', 'true');
+        video.setAttribute('muted', 'true'); 
+        video.volume = 0; 
+        
+        const source = document.createElement('source');
+        source.setAttribute('src', selectedItem.src);
+        source.setAttribute('type', 'video/mp4');
+        
+        video.appendChild(source);
+        output.appendChild(video);
+
+        output.appendChild(document.createElement('br'));
+
+        video.addEventListener('click', () => {
+            video.muted = false; 
+            video.volume = selectedItem.volume; 
+        });
+    }
 }
+
+displayRandomContent();

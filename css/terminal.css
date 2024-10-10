@@ -6,6 +6,7 @@
     height: 100%;
     z-index: -1;
     filter: blur(0.5rem);
+    background: fixed;
 }
 
 body {

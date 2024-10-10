@@ -8,6 +8,7 @@ commands:
     vacation                                 -   SCHOOL VACATIONS
     calc (NUMBER) (OPERATOR) (NUMBER)        -   CALCULATOR
     random (NUMBER)                          -   RANDOM NUMBERS
+    timetable                                -   timetable of the BFS FI 2
 
 
 
