@@ -107,15 +107,59 @@ input {
     transform: translateY(-2px);
 }
 
+.timetable {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: large;
+    color: rgba(243, 243, 243, 0.904);
+}
+.future-hour {
+    color: rgba(243, 243, 243, 0.904);
+}
 
+.timetable th, .timetable td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid green;
+    word-wrap: break-word;
+}
 
-/* Media Query für Bildschirme mit maximal 768px Breite */
+.timetable th {
+    background-color: #1212128e;
+    color: #12c600;
+}
+
+.timetable td {
+    background-color: #00000000;
+}
+
+.past-hour {
+    background-color: #1d1d1d8e;
+}
+
+.past-day {
+    background-color: #0707078e;
+}
+
+.current-hour {
+    background-color: #0029001c;
+    color: #26a300;
+}
+
 @media only screen and (max-width: 768px) {
     body {
         font-size: small; 
         padding: 10px; 
     }
+    .timetable {
+        width: 40%;
+        font-size: small;
+    }
 
+    .timetable th, .timetable td {
+        padding: 5px;
+    }
     .terminal {
         width: 95vw;
         padding: 10px;

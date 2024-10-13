@@ -136,7 +136,7 @@ $(document).ready(function() {
                 } else {
                     output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: USE SOMETHING LIKE 'calc 5 + 3'</span>\n`;
                 }
-            } else if (input.startsWith('random ')) {
+            } else if (input.startsWith('random ') || input.startsWith('random')) {
                 let parts = input.split(' ');
                 let number = parseInt(parts[1]);
             
@@ -148,7 +148,7 @@ $(document).ready(function() {
                     let randomNumber = Math.floor(Math.random() * number + 1);
                     output.innerHTML += `${promptAndInput}\nRANDOM NUMBER BETWEEN 1 and ${number}: ${randomNumber}\n`;
                 }
-            } else if (input.startsWith('rps ')) {
+            } else if (input.startsWith('rps ') || input.startsWith('rps')) {
                 let parts = input.split(' ');
                 let numberCOMPUTER = Math.floor(Math.random() * 3);
                 const rps = parts[1];
@@ -235,58 +235,99 @@ function asciiTimetable() {
     const output = document.getElementById('output');
     const input = document.getElementById('input').value.toLowerCase();
     const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
- 
+
+    output.innerHTML += `${promptAndInput}\n`;
 
     const timetableData = {
-        "Montag": ["M1-M3", "M1-M3", "M1-M3", "M1-M3", "Rel", "Deu", "", "M4", "M4", "M4"],
-        "Dienstag": ["Mathe", "Mathe", "Eng", "M1-M3", "M1-M3", "M1-M3"],
-        "Mittwoch": ["Eng", "Ital", "M1-M3", "M1-M3", "GK-ZG", "", "M4", "M4"],
-        "Donnerstag": ["Sport", "Sport", "Deu", "Deu", "Mathe", "", "M1-M3", "M1-M3", "M1-M3", "M1-M3"],
-        "Freitag": ["Ital", "Ital", "GK-ZG", "Eng", "Eng"]
-    };
-
+        "Monday": ["M1-M3", "M1-M3", "M1-M3", "M1-M3", "Rel", "Ger", "", "M4", "M4", "M4"], 
+        "Tuesday": ["Maths", "Maths", "Eng", "M1-M3", "M1-M3", "M1-M3"],
+        "Wednesday": ["Eng", "Ital", "M1-M3", "M1-M3", "GK-ZG", "", "M4", "M4"],
+        "Thursday": ["Sports", "Sports", "Ger", "Ger", "Maths", "", "M1-M3", "M1-M3", "M1-M3", "M1-M3"],
+        "Friday": ["Ital", "Ital", "GK-ZG", "Eng", "Eng"]
+    }; 
+    
     const weekDates = getWeekDates();
-    const days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
-    const times = ["07:50", "08:40", "09:30", "10:35", "11:25", "12:15", "13:15", "14:05", "15:05", "15:55"];
-    const cellWidth = 19; 
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const times = ["07:50", "08:40", "09:30", "10:35", "11:25", "12:15", "13:15", "14:05", "15:05", "15:55", "16:45"]; 
 
-    output.innerHTML = `${promptAndInput}\n+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n`;
-    output.innerHTML += "|       Zeit        |      Montag       |     Dienstag      |     Mittwoch      |    Donnerstag     |      Freitag      |\n";
+    const now = new Date();
+    const currentDay = now.getDay();
+    const currentTime = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
 
-    output.innerHTML += "|                   ";
-    for (let i = 0; i < 5; i++) {
-        output.innerHTML += "|       " + weekDates[i] + "       ";
-    }
-    output.innerHTML += "|\n";
-    output.innerHTML += "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n";
+    const table = document.createElement('table');
+    table.classList.add('timetable');
 
-    for (let i = 0; i < times.length; i++) {
-        output.innerHTML += `|       ${times[i]}       `;
-        days.forEach(day => {
-            let subject = timetableData[day]?.[i] || ""; 
-            let paddedSubject = subject.padStart((cellWidth + subject.length) / 2).padEnd(cellWidth, ' '); 
-            output.innerHTML += `|${paddedSubject}`;
+    const headerRow = document.createElement('tr');
+
+    const timeHeader = document.createElement('th');
+    timeHeader.textContent = 'Zeit';
+    headerRow.appendChild(timeHeader);
+
+    days.forEach((day, index) => {
+        const dayHeader = document.createElement('th');
+        dayHeader.textContent = `${day}\n(${weekDates[index]})`;
+        headerRow.appendChild(dayHeader);
+    });
+
+    table.appendChild(headerRow);
+
+    times.forEach((time, rowIndex) => {
+        const row = document.createElement('tr');
+
+        const timeCell = document.createElement('td');
+        timeCell.textContent = time;
+        row.appendChild(timeCell);
+
+        days.forEach((day, dayIndex) => {
+            const subjectCell = document.createElement('td');
+            const subject = timetableData[day]?.[rowIndex] || "";
+            subjectCell.textContent = subject;
+
+            const dayOfWeek = (dayIndex + 1) % 7;
+            
+            const isSameWeek = dayOfWeek >= currentDay || currentDay === 6; 
+            const isPastTimeToday = (dayOfWeek === currentDay && time < currentTime);
+
+            if (isSameWeek && isPastTimeToday) {
+                subjectCell.classList.add('past-hour');
+            } else if (isSameWeek && time >= currentTime && dayOfWeek === currentDay) {
+                subjectCell.classList.add('current-hour');
+            } else if (!isSameWeek) {
+                subjectCell.classList.add('future-hour'); 
+            }
+
+            row.appendChild(subjectCell);
         });
-        output.innerHTML += "|\n";
-        output.innerHTML += "+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+\n";
-    }
 
+        table.appendChild(row);
+    });
+    output.scrollTop = output.scrollHeight;
+
+    output.appendChild(table);
 }
 
 function getWeekDates() {
     const today = new Date();
-    const weekStart = today.getDate() - today.getDay() + 1; 
+    const currentDay = today.getDay(); 
+
+    let mondayOffset = currentDay === 6 ? 2 : (currentDay === 0 ? -6 : 1 - currentDay);
+
+    const weekStartDate = new Date(today.setDate(today.getDate() + mondayOffset));
+
     const weekDates = [];
 
-    for (let i = 0; i < 5; i++) { 
-        const date = new Date(today.setDate(weekStart + i));
-        const day = String(date.getDate()).padStart(2, '0'); 
-        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    for (let i = 0; i < 5; i++) {
+        const date = new Date(weekStartDate);
+        date.setDate(weekStartDate.getDate() + i);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         weekDates.push(`${day}.${month}`);
     }
 
     return weekDates;
 }
+
+
 
 
 function formatCowsay(text) {
@@ -328,8 +369,8 @@ function formatCowsay(text) {
         /* Media query for smaller screens */
         @media (max-width: 600px) {
             div {
-                max-width: 100%; /* Div nimmt die volle Breite des Bildschirms ein */
-                overflow-x: auto; /* Ermöglicht horizontales Scrollen auf kleinen Bildschirmen */
+                max-width: 100%; 
+                overflow-x: auto; 
             }
         }
     </style>
@@ -343,7 +384,7 @@ function vacation() {
         { name: "Allerheiligen", date: new Date("Nov 01, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [01.11.24] Allerheiligen: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [01.11.24] Allerheiligen: " },
         { name: "Sant Ambrogio", date: new Date("Dec 07, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [07.12.24] Sant Ambrogio: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [07.12.24] Sant Ambrogio: " },
         { name: "Weihnachtsferien", date: new Date("Dec 23, 2024 00:00:00").getTime(), pastMessage: "[✔️] [2024] [23.12.24] Weihnachtsferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2024] [23.12.24] Weihnachtsferien: " },
-        { name: "Faschingsferien", date: new Date("Feb 10, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [10.02.25] Faschingsferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [10.02.25] Faschingsferien: " },
+        { name: "Faschingsferien", date: new Date("May 1, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [01.03.25] Faschingsferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [01.03.25] Faschingsferien: " },
         { name: "Osterferien", date: new Date("Apr 17, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [17.04.25] Osterferien: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [17.04.25] Osterferien: " },
         { name: "Tag der Befreiung", date: new Date("Apr 25, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [25.04.25] Tag der Befreiung: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [25.04.25] Tag der Befreiung: " },
         { name: "Tag der Arbeit", date: new Date("May 01, 2025 00:00:00").getTime(), pastMessage: "[✔️] [2025] [01.05.25] Tag der Arbeit: <span style=\"color: green;\">Countdown complete.</span>", upcomingMessage: "[❌] [2025] [01.05.25] Tag der Arbeit: " },
@@ -370,7 +411,7 @@ function vacation() {
             const minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
 
-            output.innerHTML += `${event.upcomingMessage} <span style="color: red;">${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden.</span>\n`;
+            output.innerHTML += `${event.upcomingMessage} <span style="color: red;">${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds.</span>\n`;
         }
     });
 
@@ -450,8 +491,6 @@ function displayRandomContent() {
             src: 'pictures/siggidy-videos/siggidy-main.mp4',
             width: 280,
             height: 360,
-            loop: true,
-            autoplay: true,
             volume: 2.0 
         },
         {
@@ -465,7 +504,7 @@ function displayRandomContent() {
         },
         {
             type: 'video',
-            src: 'pictures/sexy-rock.mp4',
+            src: 'pictures/siggidy-videos/sexy-rock.mp4',
             width: 280,
             height: 360,
             loop: true,
@@ -480,7 +519,32 @@ function displayRandomContent() {
             loop: true,
             autoplay: true,
             volume: 2.0
-        }
+        },
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/sigggidyasssss.mp4',
+            width: 280,
+            height: 360,
+            volume: 2.0
+        },
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/siggidyballer.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0
+        },
+        {
+            type: 'video',
+            src: 'pictures/siggidy-videos/leondance.mp4',
+            width: 280,
+            height: 360,
+            loop: true,
+            autoplay: true,
+            volume: 2.0
+        },
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);
