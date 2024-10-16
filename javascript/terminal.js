@@ -102,7 +102,7 @@ $(document).ready(function() {
                 output.innerHTML = ''; 
             } else if (input.trim() === '') {                     
                 output.innerHTML += `${promptAndInput}\n`;
-            } else if (input === '') {
+            } else if (input === 'siggidy random') {
                 output.innerHTML += `${promptAndInput}\n`;
                 displayRandomContent(); 
             } else if (input.startsWith('calc ')) {
