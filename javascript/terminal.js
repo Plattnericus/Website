@@ -504,15 +504,6 @@ function displayRandomContent() {
         },
         {
             type: 'video',
-            src: 'pictures/siggidy-videos/sexy-rock.mp4',
-            width: 280,
-            height: 360,
-            loop: true,
-            autoplay: true,
-            volume: 2.0
-        },
-        {
-            type: 'video',
             src: 'pictures/siggidy-videos/siggidy-edit.mp4',
             width: 280,
             height: 360,
