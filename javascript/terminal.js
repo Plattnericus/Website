@@ -480,6 +480,7 @@ function displayRandomContent() {
         "2 Lügen, 1 Wahrheit: \n\nIch bin ein Rassist! \nIch bin ein Nazisst \nMein schwarzes Schwein heißt Leon",
         "io cago nel salotto",
         "Wie sagt man, ??? eeeehmm ...",
+        "*Italienisch Präsentation*\n\nSiggidy missing",
         "Teacher: Was ist die Absicht von Donald Trump?\n\nSiggidy: Atombombe!\n\nTeacher: Siggidy, das ist jetzt nicht passend zum Unterricht!! ab zum Nachsitzen und danach gibt es ein Gespräch mit dem Direktor!!",
         "<img src='pictures/sieder/dasiggidy.png' alt='\n\nDaSiggidy' width='250px' height='250px'>",
         "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his looooong Finger' width='250px' height='250px'>",
