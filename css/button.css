@@ -1,8 +1,8 @@
-/* Zurück Button */
+
 #zurueck-button {
     display: flex;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 60px;
     left: auto;
     top: auto;
     text-align: center;
@@ -11,28 +11,38 @@
     width: 100px;
     align-items: center;
     justify-content: center;
+    background-color: #1d1d1d !important; 
     border-radius: 3px;
-    background-color: #121212;
     letter-spacing: 1px;
     transition: all 0.2s linear;
     cursor: pointer;
+    z-index: 100000;
     border: none;
-    color: #12c600;
+    box-shadow: 0 0 0 2px #ffffff20;
+    color: #ffffffa2;
+    font-weight: 600;
+    font-size: 16px !important;
+
 }
 
-#zurueck-button > svg {
+   
+   #zurueck-button > svg {
     margin-right: 5px;
     margin-left: 5px;
     font-size: 20px;
     transition: all 0.4s ease-in;
-}
-
-#zurueck-button:hover > svg {
+    width: 20px!important;
+    height: 20px!important;
+   }
+   
+   #zurueck-button:hover > svg {
     font-size: 1.2em;
-    transform: translateX(-5px);
-}
+    transform: translateX(-10px);
 
-#zurueck-button:hover {
-    box-shadow: 9px 9px 33px #12c600, -9px -9px 33px #12c600;
+   }
+   
+   #zurueck-button:hover {
+    box-shadow: 3px 3px 20px #2af01873, -3px -3px 20px #067c0257;
     transform: translateY(-2px);
-}
+    
+   }

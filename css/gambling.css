@@ -1,65 +1,14 @@
-/* Grundlegendes Body-Design */
 body {
     margin: 0;
     padding: 0;
     background-color: #0f0f0f;
 }
 
-/* Zurück Button */
-#zurueck-button {
-    display: flex;
-    bottom: 20px;
-    right: 20px;
-    left: auto;
-    top: auto;
-    text-align: center;
-    position: absolute;
-    height: 3em;
-    width: 100px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    background-color: #121212;
-    letter-spacing: 1px;
-    transition: all 0.2s linear;
-    cursor: pointer;
-    border: none;
-    color: #12c600;
-}
-
-#zurueck-button > svg {
-    margin-right: 5px;
-    margin-left: 5px;
-    font-size: 20px;
-    transition: all 0.4s ease-in;
-}
-
-#zurueck-button:hover > svg {
-    font-size: 1.2em;
-    transform: translateX(-5px);
-}
-
-#zurueck-button:hover {
-    box-shadow: 9px 9px 33px #12c600, -9px -9px 33px #12c600;
-    transform: translateY(-2px);
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* BlackJack CSS */
 header {
-    background-color: green; /* Dunkelrot für die Kopfzeile */
+    background-color: green;
     padding: 20px;
     align-items: center;
     text-align: center;
@@ -77,14 +26,15 @@ h1 {
 
 #hit, #stay {
     width: 100px;
-    height: 50px;
     font-size: 20px;
 }
+.dealerOrYou {
+    margin: 15px;
+}
 
-/* Center-Element */
 #center {
-    max-width: 600px; /* Begrenzte maximale Breite */
-    margin: 0 auto; /* Zentriert das Div */
+    max-width: 600px; 
+    margin: 25px auto;
     padding: 20px;
     text-align: center;
     background-color: #121212;
@@ -92,7 +42,6 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Media Query für mobile Geräte */
 @media (max-width: 600px) {
     header {
         display: none;
@@ -105,23 +54,22 @@ h1 {
     }
     
     #center {
-        width: 90%; /* Breite auf 90% des Bildschirms reduziert */
+        width: 90%; 
         padding: 10px;
     }
 
     #dealer-cards img,
     #your-cards img {
-        height: 120px; /* Kleinere Kartengröße für mobile Geräte */
+        height: 120px; 
         width: 85px;
     }
 
     #hit, #stay {
-        width: 80px; /* Buttons werden schmaler für mobile Geräte */
+        width: 80px;
         height: 40px;
         font-size: 16px;
     }
 
-    /* Zurück-Button bleibt responsive */
     #zurueck-button {
         width: 80px;
         height: 40px;

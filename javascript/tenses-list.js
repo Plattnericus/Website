@@ -23,7 +23,6 @@ function addWord() {
         englishWords.push(englishWord);
         germanWords.push(germanWord);
         
-        // Wörter in die .txt Dateien speichern (API-Aufruf hier hinzufügen)
         saveWordsToServer(englishWord, germanWord);
 
         document.getElementById('english-word').value = '';
@@ -77,11 +76,10 @@ function checkAnswer() {
     }
 
     askGerman = currentMode === "random" ? !askGerman : askGerman;
-    askWord(); // Die Frage wird wiederholt
+    askWord();
 }
 
 function saveWordsToServer(englishWord, germanWord) {
-    // API-Request hier einfügen, um Wörter in die .txt Dateien auf GitHub zu speichern
     fetch('/save-words', {
         method: 'POST',
         headers: {

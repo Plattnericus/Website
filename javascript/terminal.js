@@ -54,13 +54,17 @@ $(document).ready(function() {
     });
 
 
+
+
+    
+
     //Terminal eingabefeld
 
 
     document.getElementById('input').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {     
             event.preventDefault(); 
-            const input = this.value.toLowerCase(); 
+            const input = sanitizeInput(this.value.toLowerCase());
             const output = document.getElementById('output');
     
             const promptAndInput = `<span style=\"color: green;\">user@host:~$ </span>${input}`; 
@@ -70,9 +74,20 @@ $(document).ready(function() {
                 const cowsayOutput = formatCowsay(input2);
                 output.innerHTML += `${promptAndInput}\n${cowsayOutput}\n`;
             } else if (input === 'help') {
-                output.innerHTML += `${promptAndInput}\nAvailable Commands:\nhelp - THIS LIST\nversion - TERMINAL VERSION\nshutdown - SHUTDOWN TERMINAL\nclear - CLEARS CONSOLE\ndate - DATE AND TIME\nip - YOUR IP\nvacation - SCHOOL VACATIONS\ncalc (NUMBER) (OPERATOR) (NUMBER) - CALCULATOR\nrandom (NUMBER) - RANDOM NUMBERS\ntimetable - This is the Timetable of the BFS FI 2\n`;
+                output.innerHTML += `${promptAndInput}<p>    help                                     -   THIS LIST
+    version                                  -   TERMINAL VERSION
+    shutdown                                 -   SHUTDOWN TERMINAL
+    clear                                    -   CLEARS CONSOLE
+    date                                     -   DATE AND TIME
+    ip                                       -   YOUR IP
+    vacation                                 -   SCHOOL VACATIONS
+    calc (NUMBER) (OPERATOR) (NUMBER)        -   CALCULATOR
+    random (NUMBER)                          -   RANDOM NUMBERS
+    mensa - WORK IN PROGRESS                 -   SHOWS THE CAFETERIA PLAN 
+    timetable                                -   timetable of the BFS FI 2
+    minecraft random                         -   shows images of our MC WORLD</p>\n`;
             } else if (input === 'version') {
-                output.innerHTML += `${promptAndInput}\nVERSION 0.69\n`;
+                output.innerHTML += `${promptAndInput}\nVERSION 0.69420\n`;
             } else if (input === 'date') {
                 const currentDate = new Date(); 
                 const formattedDate = currentDate.toLocaleString();
@@ -89,7 +104,7 @@ $(document).ready(function() {
                         console.error('Error:', error);
                     });
             } else if (input === 'todo') {
-                output.innerHTML += `${promptAndInput}\nCOMMANDS THAT STILL NEED TO BE PROGRAMMED:\nmensa\n`;
+                output.innerHTML += `${promptAndInput}\nCOMMANDS THAT STILL NEED TO BE PROGRAMMED:\neverything is finished!!!\n`;
             } else if (input === 'timetable') {
                 
                 asciiTimetable();
@@ -105,6 +120,9 @@ $(document).ready(function() {
             } else if (input === 'siggidy random') {
                 output.innerHTML += `${promptAndInput}\n`;
                 displayRandomContent(); 
+            } else if (input === 'minecraft random') {
+                output.innerHTML += `${promptAndInput}\n`;
+                displayRandomMinecraftContent(); 
             } else if (input.startsWith('calc ')) {
                 const calculation = input.substring('calc '.length).trim();
                 const calcMatch = calculation.match(/^(\d+)\s*([\+\-\*\/])\s*(\d+)$/);
@@ -187,7 +205,11 @@ $(document).ready(function() {
                 output.innerHTML += `${promptAndInput}\n<span style="color: red;">ERROR: COMMAND "${input}" HAS NOT BEEN FOUND</span>\n`;
             }
         
-        
+            function sanitizeInput(input) {
+                const div = document.createElement('div');
+                div.innerText = input;
+                return div.innerHTML;
+            }
             commandHistory.push(input);
             historyIndex = commandHistory.length; 
             this.value = '';
@@ -266,6 +288,14 @@ function asciiTimetable() {
     days.forEach((day, index) => {
         const dayHeader = document.createElement('th');
         dayHeader.textContent = `${day}\n(${weekDates[index]})`;
+
+        const dayOfWeek = (index + 1) % 7;
+        if (dayOfWeek < currentDay) {
+            dayHeader.classList.add('past-day');
+        } else if (dayOfWeek === currentDay) {
+            dayHeader.classList.add('current-day');
+        }
+
         headerRow.appendChild(dayHeader);
     });
 
@@ -284,15 +314,19 @@ function asciiTimetable() {
             subjectCell.textContent = subject;
 
             const dayOfWeek = (dayIndex + 1) % 7;
-            
+
             const isSameWeek = dayOfWeek >= currentDay || currentDay === 6; 
             const isPastTimeToday = (dayOfWeek === currentDay && time < currentTime);
 
-            if (isSameWeek && isPastTimeToday) {
-                subjectCell.classList.add('past-hour');
-            } else if (isSameWeek && time >= currentTime && dayOfWeek === currentDay) {
-                subjectCell.classList.add('current-hour');
-            } else if (!isSameWeek) {
+            if (dayOfWeek < currentDay) {
+                subjectCell.classList.add('past-day');
+            } else if (dayOfWeek === currentDay) {
+                if (isPastTimeToday) {
+                    subjectCell.classList.add('past-hour');
+                } else if (time >= currentTime) {
+                    subjectCell.classList.add('current-hour');
+                }
+            } else {
                 subjectCell.classList.add('future-hour'); 
             }
 
@@ -305,6 +339,7 @@ function asciiTimetable() {
 
     output.appendChild(table);
 }
+
 
 function getWeekDates() {
     const today = new Date();
@@ -326,7 +361,6 @@ function getWeekDates() {
 
     return weekDates;
 }
-
 
 
 
@@ -486,7 +520,11 @@ function displayRandomContent() {
         "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his looooong Finger' width='250px' height='250px'>",
         "<img src='pictures/sieder/siggidyhome.png' alt='\n\nHome of Siggiyy' width='250px' height='250px'>",
         "<img src='pictures/sieder/siggidyyyy.png' alt='\n\nJust Siggidy' width='250px' height='250px'>",
-
+        "<img src='pictures/sieder/siggidy-am-Busbahnhof.jpg' alt='\n\nSiggidy at the Railwaystation' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-boss.jpg' alt='\n\nJust a BOSS' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-sieda.jpg' alt='\n\nSiggidy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-sitting_outside.jpg' alt='\n\nJust Siggidy sitting outside' width='250px' height='250px'>",
+!
         {
             type: 'video',
             src: 'pictures/siggidy-videos/siggidy-main.mp4',
@@ -572,3 +610,50 @@ function displayRandomContent() {
 }
 
 displayRandomContent();
+
+
+function displayRandomMinecraftContent() {
+    const randomItems = [
+        "<img src='pictures/minecraft/Before-the-disaster.png' alt='\n\nBefore Disaster' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/budda-nearly-finished.png' alt='\n\nBudda nearly finished!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/Budda-ryhox-and-nexor.png' alt='\n\nBudda pic: Ryhox and Nexor together' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/budda.png' alt='\n\nBudda' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/END-WORLD.png' alt='\n\nThis is our End of the World' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/first-pic-in-our-base.png' alt='\n\nThis is our first pic in our first Base!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/gang-pic.png' alt='\n\nThis is our Gang!! Cheeesee!!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/moments-before-disaster.png' alt='\n\nThis is a Moment before Disaster! Siggidy didn\'t make it :(' width='500px' height='250px'>",
+    ];
+
+    const randomIndex = Math.floor(Math.random() * randomItems.length);
+    const output = document.getElementById('output');
+    
+    const selectedItem = randomItems[randomIndex];
+    
+    if (typeof selectedItem === 'string') {
+        output.innerHTML += `${selectedItem}\n`;
+    } else if (selectedItem.type === 'video') {
+        const video = document.createElement('video');
+        video.setAttribute('width', selectedItem.width);
+        video.setAttribute('height', selectedItem.height);
+        video.setAttribute('loop', 'true');
+        video.setAttribute('autoplay', 'true');
+        video.setAttribute('muted', 'true'); 
+        video.volume = 0; 
+        
+        const source = document.createElement('source');
+        source.setAttribute('src', selectedItem.src);
+        source.setAttribute('type', 'video/mp4');
+        
+        video.appendChild(source);
+        output.appendChild(video);
+
+        output.appendChild(document.createElement('br'));
+
+        video.addEventListener('click', () => {
+            video.muted = false; 
+            video.volume = selectedItem.volume; 
+        });
+    }
+}
+
+displayRandomMinecraftContent();

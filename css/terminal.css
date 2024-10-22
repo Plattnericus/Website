@@ -114,9 +114,6 @@ input {
     font-size: large;
     color: rgba(243, 243, 243, 0.904);
 }
-.future-hour {
-    color: rgba(243, 243, 243, 0.904);
-}
 
 .timetable th, .timetable td {
     padding: 10px;
@@ -126,26 +123,31 @@ input {
 }
 
 .timetable th {
-    background-color: #1212128e;
     color: #12c600;
 }
 
-.timetable td {
-    background-color: #00000000;
-}
 
 .past-hour {
-    background-color: #1d1d1d8e;
-}
-
-.past-day {
-    background-color: #0707078e;
+    background-color: #c0c0c028 !important; 
 }
 
 .current-hour {
-    background-color: #0029001c;
-    color: #26a300;
+    background-color: rgba(0, 75, 10, 0.37) !important; 
 }
+
+.past-day {
+    background-color: #161616d2 !important; 
+}
+
+.current-day {
+    background-color: rgba(0, 107, 14, 0.37) !important; 
+}
+
+.future-hour {
+    background-color: #e6e6e600 !important; 
+}
+
+
 
 @media only screen and (max-width: 768px) {
     body {

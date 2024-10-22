@@ -1,0 +1,125 @@
+body {
+    background-color: #121212;
+    color: #ecf0f1;
+
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+  max-width: 600px; /* Begrenzte maximale Breite */
+  margin: 90px auto; /* Zentriert das Div */
+  padding: 20px;
+  text-align: center;
+  background-color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.jackpot {
+    color: gold;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.balance-info {
+    margin-bottom: 20px;
+}
+
+.reels {
+    margin-top: 20px;
+    display: flex; 
+    overflow: hidden; 
+    width: 100%;
+    justify-content: center;
+}
+
+.reel {
+    height: 200px;
+    overflow: hidden; 
+    position: relative;
+    width: 100px;
+    height: 150px;
+    border: 3px solid #494949;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    background-color: rgba(5, 219, 51, 0.329);
+    border-radius: 10px;
+}
+
+.reel img {
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: 25px;
+    left: 0; 
+    align-items: center;
+}
+
+.reel img {
+    width: 100%; 
+    height: auto;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    color: #ecf0f1;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: green;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #e74c3c;
+}
+
+@media (max-width: 600px) {
+    .container {
+        max-width: 90%; 
+    }
+
+    .reels {
+        flex-direction: row; 
+    }
+
+    .reel {
+        width: 80%; 
+        margin: 10px; 
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .jackpot {
+        font-size: 20px;
+    }
+
+    button {
+        width: 100%; 
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    .balance-info p {
+        font-size: 16px;
+    }
+
+    .message {
+        font-size: 16px;
+    }
+}

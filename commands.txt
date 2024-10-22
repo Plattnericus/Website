@@ -16,3 +16,4 @@ secret commands:
     siggidy say {text}
     todo
     siggidy random
+    minecraft random
