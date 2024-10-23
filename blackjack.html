@@ -25,10 +25,11 @@
             <h2>Balance: <span id="score"></span>$</h2>
         </div>
     
-        <div style="position: relative; display: inline-block;">
-            <input type="number" id="bet-amount" min="1" max="100" value="10" step="10" style="padding-left: 200px; ">
-            <span style="position: absolute; right: 100px; top: 50%; transform: translateY(-50%); pointer-events: none; color: gray;">PLACE YOUR BET:</span>
+        <div class="bet-container">
+            <input id="bet-amount" type="number" min="10" max="1000000000" value="10" step="10" oninput="limitInput(this)">
+            <span id="textforSetBet">PLACE YOUR BET:</span>
         </div>
+
         <h2 class="dealerOrYou" style="color: rgb(180, 1, 1);">Dealer: <span style="color: green;" id="dealer-sum"></span></h2>
         <div id="dealer-cards">
             <img id="hidden" src="pictures/cards/BACK.png">
@@ -50,5 +51,14 @@
         </svg>
         <span style="color: #ffffffa2; font-weight: 600;">Back</span>
     </button>
+
+    <script type="module" src="javascript/terminal.js"></script>
+    <script>
+        function limitInput(element) {
+            if (element.value.length > 10) {
+                element.value = element.value.slice(0, 10);
+            }
+        }
+        </script>
 </body>
 </html>

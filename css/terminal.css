@@ -155,8 +155,8 @@ input {
         padding: 10px; 
     }
     .timetable {
-        width: 40%;
-        font-size: small;
+        width: 20%;
+        font-size: 8px;
     }
 
     .timetable th, .timetable td {

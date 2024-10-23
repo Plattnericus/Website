@@ -43,25 +43,36 @@ h1 {
 }
 
 @media (max-width: 600px) {
-    header {
-        display: none;
-    }
+
     body {
         margin: 0;
         padding: 0;
         background-color: #0f0f0f;
-        margin-top: 10px;
+        margin-top: 0px;
     }
-    
+
+    header {
+        padding: 15px;
+        margin-bottom: 0;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
     #center {
-        width: 90%; 
-        padding: 10px;
+        max-width: 90%; 
+        padding: 15px;
+        margin-top: 0;
+        background-color: inherit;
+
+
     }
 
     #dealer-cards img,
     #your-cards img {
-        height: 120px; 
-        width: 85px;
+        height: 80px; 
+        width: 55px;
     }
 
     #hit, #stay {
@@ -70,10 +81,9 @@ h1 {
         font-size: 16px;
     }
 
-    #zurueck-button {
-        width: 80px;
-        height: 40px;
-        bottom: 10px;
-        right: 10px;
+    .dealerOrYou {
+        margin: 10px;
     }
+
 }
+

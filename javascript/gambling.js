@@ -68,7 +68,13 @@ function startGame() {
 }
 
 function hit() {
+    const betAmount = parseInt(document.getElementById("bet-amount").value);
+    if (betAmount > score || betAmount <= 0) {
+        document.getElementById("message").innerText = "You can't bet money you don't have.";
+        return
+    }
     if (!canHit) return;
+    document.getElementById("bet-amount").readOnly = true;
 
     let cardImg = document.createElement("img");
     let card = deck.pop();
@@ -79,20 +85,39 @@ function hit() {
 
     if (reduceAce(yourSum, yourAceCount) > 21) {
         canHit = false;
+        disableButtons();
         document.getElementById("message").innerText = "You lost";
         updateScore(-parseInt(document.getElementById("bet-amount").value));
+        setTimeout(() => {
+            document.getElementById("message").innerText = "Wait a second!";
+        }, 1500);
+    
+        setTimeout(() => {
+            location.reload();
+        }, 3000);
     }
+
 }
 
+
 function stay() {
+    const betAmount = parseInt(document.getElementById("bet-amount").value);
+    if (betAmount > score || betAmount <= 0) {
+        document.getElementById("message").innerText = "You can't bet money you don't have.";
+        return;
+    }
+    if (canHit) {
+        document.getElementById("bet-amount").readOnly = true;
+    }
+
     dealerSum = reduceAce(dealerSum, dealerAceCount);
     yourSum = reduceAce(yourSum, yourAceCount);
 
     canHit = false;
+    disableButtons();
     document.getElementById("hidden").src = "./pictures/cards/" + hidden + ".png";
 
     let message = "";
-    const betAmount = parseInt(document.getElementById("bet-amount").value);
 
     if (yourSum > 21) {
         document.getElementById("message").innerText = "You lost";
@@ -106,7 +131,7 @@ function stay() {
         document.getElementById("message").innerText = "You Won. Your Money got doubled";
         updateScore(betAmount);
     } else {
-        document.getElementById("message").innerText = "You lost";
+        document.getElementById("message").innerText = "You lost! :(";
         updateScore(-betAmount);
     }
 
@@ -122,6 +147,11 @@ function stay() {
         location.reload();
     }, 3000);
 }
+function disableButtons() {
+    document.getElementById("hit").disabled = true;
+    document.getElementById("stay").disabled = true;
+}
+
 
 function updateScore(amount) {
     score += amount;
@@ -129,8 +159,7 @@ function updateScore(amount) {
     saveScore();
 
     if (score <= 0) {
-        document.getElementById("message").innerText = "Siggidy says you have nomore money!!! here 100$ more!";
-        score = 100;
+        document.getElementById("message").innerText = "Siggidy says you have nomore money!!! You need to get some Money (go to Money maker)!";
         document.getElementById('score').textContent = score;
         saveScore();
     }

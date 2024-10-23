@@ -17,23 +17,23 @@ header {
 
 h1 {
     font-size: 2.5em;
-
 }
 
 #score-container {
     margin: 30px 0;
     color: #ffffffa2;
-
 }
 
 #betting-container {
     margin: 20px 0;
 }
+
 .message {
     margin-top: 15px;
     font-size: 18px;
     color: #e74c3c;
 }
+
 input {
     color: #ffffffa2;
     background-color: #0f0f0f;
@@ -45,23 +45,23 @@ input {
     transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
     width: 100%;
 }
+
 input:hover {
     box-shadow: 0 0 0 2px #21f32c60;
     color: #ffffff;
+}
 
-  }
-  input:focus {
-    outline: none; 
+input:focus {
+    outline: none;
     box-shadow: 0 0 0 2px #21f32c60;
     color: #ffffff;
-
 }
+
 .bet-buttons {
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
-
 
 .bet-button {
     margin: 10px;
@@ -78,46 +78,16 @@ input:hover {
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
     background-color: rgba(0, 0, 0, 0.301);
-  }
-  
-  .bet-button span:last-child {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background-color: #21f321;
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
-  }
-  
-  .bet-button span:first-child {
-    position: relative;
-    z-index: 1;
-  }
-  
-  .bet-button:hover {
+}
+
+.bet-button:hover {
     box-shadow: 0 0 0 5px #21f32c60;
     color: #ffffff;
-  }
-  
-  .bet-button:active {
-    scale: 0.95;
-  }
-  
-  .bet-button:hover span:last-child {
-    width: 150px;
-    height: 150px;
-    opacity: 1;
-  }
-  
-  
-  
+}
+
 #roulette-container {
-    max-width: 600px; /* Begrenzte maximale Breite */
-    margin: 45px auto; /* Zentriert das Div */
+    max-width: 600px;
+    margin: 45px auto;
     padding: 20px;
     text-align: center;
     background-color: #121212;
@@ -132,20 +102,20 @@ input:hover {
 }
 
 #roulette-wheel {
-    width: 300px; /* Breite des Roulette-Rads */
+    width: 300px;
     transition: transform 1s;
 }
 
 #roulette-ball {
     position: absolute;
-    width: 16px; /* Ballgröße */
+    width: 16px;
     height: 16px;
-    background-color: white; /* Ballfarbe */
-    border-radius: 50%; /* Ball rund */
-    top: 50%; /* Vertikale Position */
-    left: 50%; /* Horizontale Position */
-    transform: translate(-50%, -50%); /* Zentrale Positionierung */
-    transition: all 1s; /* Sanfter Übergang */
+    background-color: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 1s;
 }
 
 .hidden {
@@ -156,47 +126,74 @@ input:hover {
     margin-top: 20px;
     font-size: 1.5em;
 }
+.bet-container {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    width: 280px;
+}
 
+#bet-amount {
+    width: 100%;
+    padding-left: 160px;
+    box-sizing: border-box;
+}
 
-/* Responsive Styles */
+#textforSetBet {
+    position: absolute;
+    left: 10px;
+    top: 49%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: gray;
+}
+
+/* Media query for mobile devices */
 @media (max-width: 600px) {
+    .bet-container {
+        width: 230px;
+    }
+    #bet-amount {
+        padding-left: 125px;
+    }
+
+    #textforSetBet {
+        left: 5px; /* Adjust text positioning on mobile */
+        font-size: 13px;
+    }
+
     h1 {
-        font-size: 2em; /* Kleinere Schriftgröße für mobile Geräte */
+        font-size: 1.2em;
     }
 
+    #roulette-container {
+        max-width: 90%; 
+        padding: 15px;
+        margin-top: 0;
+        background-color: inherit;
+    }
+    
     #roulette-wheel {
-        width: 80%; /* Rad breiter für mobile Geräte */
+        width: 200px; 
     }
-
-    input {
-        color: #ffffffa2;
-        background-color: #0f0f0f;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0 0 0 2px #ffffff20;
-        font-weight: 600;
-        transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-        width: 100%;
-    }
-    input:hover {
-        box-shadow: 0 0 0 2px #21f32c60;
-        color: #ffffff;
     
-      }
-      input:focus {
-        outline: none; 
-        box-shadow: 0 0 0 2px #21f32c60;
-        color: #ffffff;
-    
+    #roulette-ball {
+        width: 12px; 
+        height: 12px;
     }
 
     .bet-button {
-        padding: 8px 16px; /* Kleinere Buttons */
-        font-size: 1em; /* Kleinere Schriftgröße für Buttons */
+        padding: 10px 8px;
+        font-size: 14px; 
+    }
+
+    .message {
+        font-size: 0.8em;
     }
 
     #result {
-        font-size: 1.2em; /* Kleinere Schriftgröße für das Ergebnis */
+        font-size: 0.8em;
     }
+
+
 }

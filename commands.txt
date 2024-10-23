@@ -9,6 +9,7 @@ commands:
     calc (NUMBER) (OPERATOR) (NUMBER)        -   CALCULATOR
     random (NUMBER)                          -   RANDOM NUMBERS
     timetable                                -   timetable of the BFS FI 2
+    minecraft random                         -   shows our best pics in our Minecraft World
 
 
 
@@ -16,4 +17,4 @@ secret commands:
     siggidy say {text}
     todo
     siggidy random
-    minecraft random
+    ineedmoneypls set/remove/add (Betrag)

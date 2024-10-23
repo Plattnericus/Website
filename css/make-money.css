@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    overflow: hidden;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #007937;
+}
+
+.difficulty button {
+    background-color: #007937;
+    color: #1d1d1d;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.difficulty button:hover {
+    background-color: #004d40;
+}
+
+.game-area {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    border: 2px solid #007937;
+    background-color: #1d1d1d;
+    overflow: hidden;
+    border-radius: 15px;
+    margin: 20px auto;
+}
+
+.character {
+    position: absolute;
+    font-size: 30px;
+    transition: left 0.1s ease, top 0.1s ease;
+}
+
+.timer {
+    font-size: 24px;
+    color: green;
+}
+
+.prize {
+    font-size: 18px;
+    margin-top: 10px;
+    color: green;
+}
+
+#popup {
+    position: absolute;
+    background-color: #1d1d1d;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hidden {
+    display: none;
+}
+
+.obstacle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: green;
+    border-radius: 5px;
+}
+
+h2 {
+    color: rgb(2, 158, 2);
+    -webkit-text-stroke: 1px black;
+}

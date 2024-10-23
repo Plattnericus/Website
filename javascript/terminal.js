@@ -1,3 +1,5 @@
+
+
 $(document).ready(function() {
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -83,7 +85,7 @@ $(document).ready(function() {
     vacation                                 -   SCHOOL VACATIONS
     calc (NUMBER) (OPERATOR) (NUMBER)        -   CALCULATOR
     random (NUMBER)                          -   RANDOM NUMBERS
-    mensa - WORK IN PROGRESS                 -   SHOWS THE CAFETERIA PLAN 
+    mensa                                    -   SHOWS THE CAFETERIA PLAN 
     timetable                                -   timetable of the BFS FI 2
     minecraft random                         -   shows images of our MC WORLD</p>\n`;
             } else if (input === 'version') {
@@ -110,12 +112,63 @@ $(document).ready(function() {
                 asciiTimetable();
             }else if (input === 'vacation') {
                 vacation(); 
-            } else if (input === 'shutdown') {
+            } else if(input == 'mensa'){
+                asciiMensaplan();
+            }else if (input === 'shutdown') {
                 output.innerHTML += `${promptAndInput}\n`;
                 simulateShutdown(output);
+            } else if (input.startsWith('get money')) {
+                output.innerHTML += `${promptAndInput}\n`;
+                const amount = parseInt(input.split(' ')[2], 10); 
+                if (!isNaN(amount)) {
+                    output.innerHTML += '\n<Du hast ' + amount + '$ bekommen!!\n';
+                    score = amount; 
+                } else {
+                    output.innerHTML += "<span style=\"color: red;\">[Arity] Wrong number of arguments. Function 'get money' expects 0 got 1!</span>\n";
+                }
             } else if (input === 'clear') {
                 output.innerHTML = ''; 
-            } else if (input.trim() === '') {                     
+            }  else if (input.startsWith('ineedmoneypls')) {
+                let moneyInput; 
+                
+                const inputParts = input.split(' ');
+            
+
+                if (inputParts.length > 2) {
+                    const action = inputParts[1].toLowerCase();
+                    moneyInput = parseInt(inputParts[2]);
+            
+                    if (!isNaN(moneyInput) && moneyInput >= 0) { 
+                        switch (action) {
+                            case 'add':
+                                score += moneyInput; 
+                                output.innerHTML += `${promptAndInput}\nMONEY got added: ${moneyInput}\n`;
+                                break;
+                            case 'set':
+                                score = moneyInput; 
+                                output.innerHTML += `${promptAndInput}\nMONEY set to: ${moneyInput}\n`;
+                                break;
+                            case 'remove':
+                                if (moneyInput <= score) { 
+                                    score -= moneyInput; 
+                                    output.innerHTML += `${promptAndInput}\nMONEY got removed: ${moneyInput}\n`;
+                                } else {
+                                    output.innerHTML += `${promptAndInput}\nCannot remove ${moneyInput}, insufficient funds.\n`;
+                                }
+                                break;
+                            default:
+                                output.innerHTML += `${promptAndInput}\nInvalid action. Please use add, set, or remove.\n`;
+                                break;
+                        }
+                        saveScore();
+                    } else {
+                        output.innerHTML += `${promptAndInput}\nInvalid money input. Please enter a non-negative number.\n`;
+                    }
+                } else {
+                    output.innerHTML += `${promptAndInput}\nJUST kidding you dont get any money here!\n`;
+                }
+                        }
+            else if (input.trim() === '') {                     
                 output.innerHTML += `${promptAndInput}\n`;
             } else if (input === 'siggidy random') {
                 output.innerHTML += `${promptAndInput}\n`;
@@ -236,7 +289,12 @@ $(document).ready(function() {
     });
 });
 
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
+document.getElementById('score').textContent = score;
 
+function saveScore() {
+    localStorage.setItem('score', score);
+}
 const scrollableDiv = document.getElementById('scrollableDiv');
 
 inputField.addEventListener('keydown', function(event) {
@@ -251,6 +309,132 @@ inputField.addEventListener('keydown', function(event) {
     inputField.value = '';
   }
 });
+
+
+
+
+
+
+function asciiMensaplan() {
+    const output = document.getElementById('output');
+    const input = document.getElementById('input').value.toLowerCase();
+    const promptAndInput = `<span class="prompt">user@host:~$</span>${input}`;
+
+    output.innerHTML += `${promptAndInput}\n`;
+
+    const timetableData = {
+        "Montag": [
+            "Farfalle mit Zucchini und Lachssauce", 
+            "Gebratene Hähnchenschenkel mit Pommes Frites",
+            "Kräuterknödel mit Pilzsauce", 
+            "Truthahngeschnetzeltes mit Reis", 
+            "Hirtenmaccheroni mit Mozzarelline", 
+            "Rindsbraten mit Eierspätzle", 
+        ],
+
+        "Dienstag": [
+            "Truthahnbraten mit Reis", 
+            "Fusilli mit Thunfischsauce", 
+            "Wienerschnitzel (Truthahn) mit Ofenkartoffeln", 
+            "Spinatspätzle mit Schinken und Sahnesauce", 
+            "Champignonschnitzel mit Kroketten", 
+            "Schollenfilet gebacken mit Kräuterkartoffeln",
+        ],
+
+        "Mittwoch": [
+            "Rindsgulasch mit Polenta", 
+            "Schlutzkrapfen mit Butter und Parmesan",
+            "Kalbsbraten mit gedünstetem Reis",  
+            "Penne mit Bolognesersauce", 
+            "Wienerschnitzel (Truthahn) mit Bratkartoffeln",
+            "Vollkornnudel mit Gemüsesauce", 
+        ],
+ 
+        "Donnerstag": [
+            "Spinat- und Käseknödel mit Gorgonzolasauce", 
+            "Fleischkrapfen mit Kartoffelpüree", 
+            "Conchiglie mit Tomaten-Basilikumsauce und Mozzarelline", 
+            "Kalbsgulasch mit Reis", 
+            "Pennette mit Meeresfrüchten", 
+            "Lasagne Bolognese oder Gemüse", 
+        ],
+
+        "Freitag": [
+            "Kartoffelnocken mit Tomatensauce",
+            "Kabeljau gratiniert mit Polenta",
+            "Lachsschnitte im Ofen mit Schnittlauchkartoffel", 
+            "Lachsschnitte im Ofen mit Schnittlauchkartoffeln",
+            "Pizza mit Thunfisch oder Margherita",
+            "Käsepressknödel mit Lauchsoße", 
+            "Gegrilltes Kalbswürstel mit Petersilienkartoffeln"
+        ]
+    };
+
+    const times = [
+        "21.10 - 25.10", 
+        "04.11 - 08.11", 
+        "11.11 - 15.11", 
+        "18.11 - 22.11", 
+        "25.11 - 29.11", 
+        "02.12 - 06.12"
+    ]; 
+
+    const now = new Date();
+    const currentDayIndex = (now.getDay() + 6) % 7;
+    const currentDate = now.getDate();
+    const currentMonth = now.getMonth() + 1;
+
+    const table = document.createElement('table');
+    table.classList.add('timetable');
+
+    const headerRow = document.createElement('tr');
+    const monthHeader = document.createElement('th');
+    monthHeader.textContent = 'Monate';
+    headerRow.appendChild(monthHeader);
+
+    const days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
+
+    days.forEach(day => {
+        const dayHeader = document.createElement('th');
+        dayHeader.textContent = day;
+        headerRow.appendChild(dayHeader);
+    });
+
+    table.appendChild(headerRow);
+
+    times.forEach((time, rowIndex) => {
+        const row = document.createElement('tr');
+
+        const monthCell = document.createElement('td');
+        monthCell.textContent = time;
+        row.appendChild(monthCell);
+
+        days.forEach((day, dayIndex) => {
+            const subjectCell = document.createElement('td');
+            const subject = timetableData[day]?.[rowIndex] || "";
+
+            subjectCell.textContent = subject;
+
+            const targetDate = (rowIndex === 0 && currentDayIndex === dayIndex && currentDate === 23 && currentMonth === 10);
+            if (targetDate) {
+                subjectCell.style.backgroundColor = '#c1c0c028';
+            } else if (subject === "") {
+                subjectCell.style.backgroundColor = '#161616d2'; 
+            }
+
+            row.appendChild(subjectCell);
+        });
+
+        table.appendChild(row);
+    });
+
+    output.scrollTop = output.scrollHeight;
+    output.appendChild(table);
+}
+
+
+
+
 
 
 function asciiTimetable() {

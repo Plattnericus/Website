@@ -19,7 +19,7 @@ body {
 
 
 .jackpot {
-    color: gold;
+    color: rgb(22, 124, 1);
     font-size: 24px;
     margin-bottom: 15px;
 }
@@ -66,20 +66,6 @@ body {
     height: auto;
 }
 
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: green;
-    border: none;
-    border-radius: 5px;
-    color: #ecf0f1;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: green;
-}
 
 .message {
     margin-top: 15px;
@@ -90,36 +76,38 @@ button:hover {
 @media (max-width: 600px) {
     .container {
         max-width: 90%; 
+        padding: 15px;
+        margin-top: 0;
+        background-color: inherit;
+
     }
 
     .reels {
         flex-direction: row; 
+        justify-content: space-around;
     }
 
     .reel {
-        width: 80%; 
-        margin: 10px; 
+        width: 80px; 
+        height: 120px;
+        margin: 10px 5px; 
     }
 
     h1 {
-        font-size: 24px;
+        font-size: 1.8em;
     }
 
     .jackpot {
-        font-size: 20px;
-    }
-
-    button {
-        width: 100%; 
-        padding: 15px;
-        font-size: 18px;
+        margin-top: 10px;
+        font-size: 1.5em;
     }
 
     .balance-info p {
-        font-size: 16px;
+        font-size: 1em;
     }
 
     .message {
-        font-size: 16px;
+        font-size: 1em;
     }
 }
+
