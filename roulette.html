@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roulette</title>
     <link rel="icon" type="image/png" href="./pictures/roulette.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/button.css">
     <link rel="stylesheet" href="css/roulette.css">
     <link rel="stylesheet" href="css/schriften.css">
 </head>
 <body>
     <header>
-        <h1>Roulette</h1>
+        <h3 onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span class="header-text">nexor.ryhox.xyz</span>
+        </h3>
+        <h1>Blackjack</h1>
     </header>
+
     <main>
         <div id="roulette-container">
             <div id="score-container">
@@ -41,12 +47,6 @@
         <span style="color: #ffffffa2; font-weight: 600;">Back</span>
     </button>
     <script src="javascript/roulette.js"></script>
-    <script>
-        function limitInput(element) {
-            if (element.value.length > 10) {
-                element.value = element.value.slice(0, 10);
-            }
-        }
-        </script>
+
 </body>
 </html>

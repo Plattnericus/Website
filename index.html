@@ -3,37 +3,80 @@
 <head>
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/schriften.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="./pictures/logo.png">
 
         
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexor</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+    
+        .background {
+            background-image: url('pictures/background.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(3px);
+            height: 100%;
+            width: 100%;
+            position: absolute; 
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.336);
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
 </head>
 <body>
+    <div class="background"></div>
+    <div class="overlay"></div>
 
-    <body style="background-image: url(pictures/background.png); ">
+        <header>
+            <h1 style="color:#d1d1d1;"><i class="fas fa-home"></i> nexor.ryhox.xyz</h1>
+        </header>  
 
-    <div class="title">nexor.ryhox.xyz</div>
-    
-    <section id="services">
-        <h2>Unsere Auswahl</h2>
-        <a href="gambling.html" style="text-decoration: none;">
-            <div class="card">
-                <img src="pictures/gambling.png" id="logo3">GAMBLING
-            </div>
-        </a>
-        <a href="terminal.html" style="text-decoration: none;">
-            <div class="card">
-                <img src="pictures/terminal-logo.png" id="logo">TERMINAL
-            </div>
-        </a>
-         <a href="make-money.html" style="text-decoration: none;">
-            <div class="card">
-                <img src="pictures/money-maker.png" id="logo2">MONEY MAKER
-            </div>
-        </a>
-      </section>
+        <section id="services">
+            <h2>Our selection</h2>
+        
+            <a href="gambling.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/gambling.png" class="service-icon" alt="Gambling Logo">
+                    <span class="service-text">GAMBLING</span>
+                </button>
+            </a>
+        
+            <a href="terminal.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/terminal-logo.png" class="service-icon" alt="Terminal Logo">
+                    <span class="service-text">TERMINAL</span>
+                </button>
+            </a>
+        
+            <a href="money-maker-menu.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/money-maker.png" class="service-icon" alt="Money Maker Logo">
+                    <span class="service-text">MONEY MAKER</span>
+                </button>
+            </a>
+        </section>
+        
+        
+        
 
     <script src="javascript/index.js"></script>
 </body> 

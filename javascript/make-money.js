@@ -12,15 +12,20 @@ let siggidySpeed = 1;
 let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
 document.getElementById('score').textContent = score;
 
-const MIN_SPAWN_DISTANCE = 300;
-
 const keys = {};
+const rewards = {
+    easy: 100,
+    medium: 1000,
+    hard: 10000,
+    hardcore: 1000000
+};
 
 function startGame(difficulty) {
     selectedDifficulty = difficulty;
     setObstacleCount(difficulty);
     setSiederSpeed(difficulty);
     resetGame();
+    
     player = document.getElementById("player");
     siggidy = document.getElementById("siggidy");
     gameArea = document.querySelector(".game-area");
@@ -38,65 +43,40 @@ function startGame(difficulty) {
         keys[event.key] = false;
     });
 
-    gameInterval = setInterval(() => {
-        movePlayer();
-        updateGame();
-    }, 1000 / 60);
-    spawnObstacles();
-    startTimer();
-
     showDifficultyAlert(difficulty);
+
+    setTimeout(() => {
+        gameInterval = setInterval(() => {
+            movePlayer();
+            updateGame();
+        }, 1000 / 60);
+        spawnObstacles();
+        startTimer();
+    }, 3000);
 }
 
 function setObstacleCount(difficulty) {
-    switch (difficulty) {
-        case "easy":
-            obstacleCount = 1;
-            break;
-        case "medium":
-            obstacleCount = 2;
-            break;
-        case "hard":
-            obstacleCount = 2;
-            break;
-        case "HARDCORE":
-            obstacleCount = 3;
-            break;
-        default:
-            obstacleCount = 1;
-    }
+    obstacleCount = difficulty === "HARDCORE" ? 3 : (difficulty === "hard" ? 2 : 1);
 }
 
 function setSiederSpeed(difficulty) {
-    switch (difficulty) {
-        case "easy":
-            siggidySpeed = 1;
-            break;
-        case "medium":
-            siggidySpeed = 2;
-            break;
-        case "hard":
-            siggidySpeed = 3;
-            break;
-        case "HARDCORE":
-            siggidySpeed = 4;
-            break;
-        default:
-            siggidySpeed = 1;
-    }
+    siggidySpeed = difficulty === "HARDCORE" ? 2.5 : (difficulty === "hard" ? 2 : (difficulty === "medium" ? 1.5 : 1));
 }
 
 function resetGame() {
+    obstacles.forEach(obstacle => obstacle.remove());
     obstacles = [];
     isGameOver = false;
+    clearInterval(gameInterval);
     clearInterval(timer);
-    document.querySelectorAll(".obstacle").forEach(obstacle => obstacle.remove());
-
+    
     for (const key in keys) {
         delete keys[key];
     }
 
     document.querySelector('.difficulty').style.display = 'block';
+    document.getElementById('timer').textContent = '';
+    document.getElementById('score').textContent = score;
 }
 
 function spawnCharacter(character) {
@@ -123,17 +103,12 @@ function isPositionValid(x, y, character) {
         bottom: y + characterRect.height,
     };
 
-    const playerValid = !(newRect.left < playerRect.right &&
-        newRect.right > playerRect.left &&
-        newRect.top < playerRect.bottom &&
-        newRect.bottom > playerRect.top);
-
-    const siggidyValid = !(newRect.left < siggidyRect.right &&
-        newRect.right > siggidyRect.left &&
-        newRect.top < siggidyRect.bottom &&
-        newRect.bottom > siggidyRect.top);
-
-    return playerValid && siggidyValid;
+    return !(
+        (newRect.left < playerRect.right && newRect.right > playerRect.left &&
+         newRect.top < playerRect.bottom && newRect.bottom > playerRect.top) ||
+        (newRect.left < siggidyRect.right && newRect.right > siggidyRect.left &&
+         newRect.top < siggidyRect.bottom && newRect.bottom > siggidyRect.top)
+    );
 }
 
 function movePlayer() {
@@ -192,10 +167,13 @@ function spawnObstacles() {
             const gameAreaRect = gameArea.getBoundingClientRect();
             let x, y;
 
-            do {
+            let isValidPosition = false;
+            while (!isValidPosition) {
                 x = Math.random() * (gameAreaRect.width - 30);
                 y = Math.random() * (gameAreaRect.height - 30);
-            } while (!isObstaclePositionValid(x, y));
+            
+                isValidPosition = isObstaclePositionValid(x, y);
+            }
 
             obstacle.style.left = `${x}px`;
             obstacle.style.top = `${y}px`;
@@ -221,138 +199,127 @@ function isObstaclePositionValid(x, y) {
     const playerRect = player.getBoundingClientRect();
     const siggidyRect = siggidy.getBoundingClientRect();
 
-    const playerValid = !(obstacleRect.left < playerRect.right &&
-        obstacleRect.right > playerRect.left &&
-        obstacleRect.top < playerRect.bottom &&
-        obstacleRect.bottom > playerRect.top);
+    const padding = 20; 
+    const distanceThreshold = 60; 
 
-    const siggidyValid = !(obstacleRect.left < siggidyRect.right &&
-        obstacleRect.right > siggidyRect.left &&
-        obstacleRect.top < siggidyRect.bottom &&
-        obstacleRect.bottom > siggidyRect.top);
-
-    const playerDistance = Math.hypot(
-        (playerRect.left + playerRect.width / 2) - (x + 15),
-        (playerRect.top + playerRect.height / 2) - (y + 15)
+    const playerDistance = Math.sqrt(
+        Math.pow((obstacleRect.left - playerRect.left), 2) + 
+        Math.pow((obstacleRect.top - playerRect.top), 2)
+    );
+    
+    const siggidyDistance = Math.sqrt(
+        Math.pow((obstacleRect.left - siggidyRect.left), 2) + 
+        Math.pow((obstacleRect.top - siggidyRect.top), 2)
     );
 
-    const siggidyDistance = Math.hypot(
-        (siggidyRect.left + siggidyRect.width / 2) - (x + 15),
-        (siggidyRect.top + siggidyRect.height / 2) - (y + 15)
-    );
-
-    return playerValid && siggidyValid && playerDistance > MIN_SPAWN_DISTANCE && siggidyDistance > MIN_SPAWN_DISTANCE;
+    return playerDistance > distanceThreshold && siggidyDistance > distanceThreshold; 
 }
 
-function updateGame() {
-    moveSieder();
-    checkCollision();
-}
+
 
 function checkCollision() {
     const playerRect = player.getBoundingClientRect();
-
-    obstacles.forEach(obstacle => {
-        const obstacleRect = obstacle.getBoundingClientRect();
-        if (
-            playerRect.left < obstacleRect.right &&
-            playerRect.right > obstacleRect.left &&
-            playerRect.top < obstacleRect.bottom &&
-            playerRect.bottom > obstacleRect.top
-        ) {
-            gameOver();
-        }
-    });
-
     const siggidyRect = siggidy.getBoundingClientRect();
-    if (
-        playerRect.left < siggidyRect.right &&
-        playerRect.right > siggidyRect.left &&
-        playerRect.top < siggidyRect.bottom &&
-        playerRect.bottom > siggidyRect.top
-    ) {
-        gameOver(); 
+
+    if (obstacles.some(obstacle => {
+        const obstacleRect = obstacle.getBoundingClientRect();
+        return (obstacleRect.left < playerRect.right && obstacleRect.right > playerRect.left &&
+                obstacleRect.top < playerRect.bottom && obstacleRect.bottom > playerRect.top);
+    })) {
+        endGame();
     }
+
+    if (playerRect.left < siggidyRect.right && playerRect.right > siggidyRect.left &&
+        playerRect.top < siggidyRect.bottom && playerRect.bottom > siggidyRect.top) {
+        endGame();
+    }
+
+    moveSieder();
 }
 
-function gameOver() {
+function endGame() {
     isGameOver = true;
     clearInterval(gameInterval);
     clearInterval(timer);
+    obstacles.forEach(obstacle => obstacle.remove());
+    obstacles = [];
     player.style.display = 'none';
     siggidy.style.display = 'none';
-    obstacleCount = 0;
-    
-    document.querySelectorAll(".obstacle").forEach(obstacle => obstacle.remove());
-
-    resetGame();
+    showGameOverPopup();
 }
 
-function timeUp() {
-    clearInterval(gameInterval);
-    clearInterval(timer);
+function showGameOverPopup() {
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerHTML = `
+        <h2>GAME OVER</h2>
+        <button class="close">X</button>
+    `;
+    document.body.appendChild(popup);
 
-    let message = ""; 
-    switch (selectedDifficulty) {
-        case "easy":
-            score += 200;
-            message = "Time's up! You earned 200$";
-            break;
-        case "medium":
-            score += 1500;
-            message = "Time's up! You earned 1500$";
-            break;
-        case "hard":
-            score += 50000;
-            message = "Time's up! You earned 50,000$";
-            break;
-        case "HARDCORE":
-            score += 1000000;
-            message = "Time's up! You earned 1,000,000$";
-            break;
-        default:
-            message = "Time's up!";
-            break;
-    }
+    const closeButton = popup.querySelector(".close");
+    closeButton.addEventListener("click", () => {
+        popup.remove();
+        location.reload();
+    });
 
-    saveScore();
-    document.getElementById('score').textContent = score;
-
-    alert(message);
-
-    gameOver();
-}
-
-function saveScore() {
-    localStorage.setItem('score', score);
+    closeButton.focus();
 }
 
 function startTimer() {
     let timeLeft = 30;
+    document.getElementById('timer').textContent = `Time: ${timeLeft}s`;
+
     timer = setInterval(() => {
-        timeLeft--;
         if (timeLeft <= 0) {
-            timeUp(); 
-            return; 
+            clearInterval(timer);
+            showWinPopup(selectedDifficulty);
+        } else {
+            timeLeft--;
+            document.getElementById('timer').textContent = `Time: ${timeLeft}s`;
         }
-        document.getElementById('timer').textContent = 'Time: ' + timeLeft + 's'; // Update display with 's'
     }, 1000);
 }
+
+function showWinPopup(difficulty) {
+    obstacles.forEach(obstacle => obstacle.remove());
+    obstacles = [];
+    player.style.display = 'none';
+    siggidy.style.display = 'none';
+    const money = rewards[difficulty];
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.style.backgroundColor = "green";
+    popup.innerHTML = `
+        <h2>YOU WON ${money}$!</h2>
+        <button class="close">X</button>
+    `;
+    document.body.appendChild(popup);
+
+    const closeButton = popup.querySelector(".close");
+    closeButton.addEventListener("click", () => {
+        popup.remove();
+        score += money;
+        localStorage.setItem('score', score);
+        document.getElementById('score').textContent = score;
+        player.style.display = 'none';
+        siggidy.style.display = 'none';
+        obstacles.forEach(obstacle => obstacle.remove());
+        obstacles = [];
+        location.reload();
+    });
+
+    closeButton.focus();
+}
+
 function showDifficultyAlert(difficulty) {
-    switch (difficulty) {
-        case "easy":
-            alert("You selected EASY mode. Good luck!");
-            break;
-        case "medium":
-            alert("You selected MEDIUM mode. Challenge accepted!");
-            break;
-        case "hard":
-            alert("You selected HARD mode. Prepare for a tough fight!");
-            break;
-        case "HARDCORE":
-            alert("You selected HARDCORE mode. Only the brave dare!");
-            break;
-        default:
-            alert("You selected an unknown mode.");
-    }
+    const alertBox = document.createElement("div");
+    alertBox.className = "alert";
+    alertBox.innerHTML = `<p>Difficulty set to: ${difficulty}</p>`;
+    document.body.appendChild(alertBox);
+
+    setTimeout(() => {
+        alertBox.remove();
+    }, 2000);
 }

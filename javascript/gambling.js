@@ -1,184 +1,146 @@
-let dealerSum = 0;
-let yourSum = 0;
-let dealerAceCount = 0;
-let yourAceCount = 0; 
-let hidden;
-let deck;
-let canHit = true; 
+let dealerSum = 0, yourSum = 0, dealerAceCount = 0, yourAceCount = 0;
+let hidden, deck, canHit = true;
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
 
 window.onload = function() {
+    document.getElementById('score').textContent = score;
     buildDeck();
     shuffleDeck();
     startGame();
+};
 
-}
-let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
-document.getElementById('score').textContent = score;
-function saveScore() {
-    localStorage.setItem('score', score);
-}
 function buildDeck() {
-    let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    let types = ["C", "D", "H", "S"];
-    deck = [];
-
-    for (let i = 0; i < types.length; i++) {
-        for (let j = 0; j < values.length; j++) {
-            deck.push(values[j] + "-" + types[i]); 
-        }
-    }
+    const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    const types = ["C", "D", "H", "S"];
+    deck = values.flatMap(value => types.map(type => `${value}-${type}`));
 }
 
 function shuffleDeck() {
-    for (let i = 0; i < deck.length; i++) {
-        let j = Math.floor(Math.random() * deck.length);
-        let temp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = temp;
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
     }
 }
 
 function startGame() {
-    document.getElementById('score').textContent = score;
-
+    updateScoreDisplay();
     hidden = deck.pop();
     dealerSum += getValue(hidden);
     dealerAceCount += checkAce(hidden);
 
-    while (dealerSum < 17) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./pictures/cards/" + card + ".png";
-        dealerSum += getValue(card);
-        dealerAceCount += checkAce(card);
-        document.getElementById("dealer-cards").append(cardImg);
-    }
+    drawDealerCards();
+    drawPlayerCards(2);
+    setupEventListeners();
+}
 
-    for (let i = 0; i < 2; i++) {
-        let cardImg = document.createElement("img");
-        let card = deck.pop();
-        cardImg.src = "./pictures/cards/" + card + ".png";
-        yourSum += getValue(card);
-        yourAceCount += checkAce(card);
-        document.getElementById("your-cards").append(cardImg);
-    }
-
+function setupEventListeners() {
     document.getElementById("hit").addEventListener("click", hit);
     document.getElementById("stay").addEventListener("click", stay);
 }
 
-function hit() {
-    const betAmount = parseInt(document.getElementById("bet-amount").value);
-    if (betAmount > score || betAmount <= 0) {
-        document.getElementById("message").innerText = "You can't bet money you don't have.";
-        return
+function drawDealerCards() {
+    while (dealerSum < 17) {
+        const card = drawCard("dealer-cards");
+        dealerSum += getValue(card);
+        dealerAceCount += checkAce(card);
     }
-    if (!canHit) return;
-    document.getElementById("bet-amount").readOnly = true;
-
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "./pictures/cards/" + card + ".png";
-    yourSum += getValue(card);
-    yourAceCount += checkAce(card);
-    document.getElementById("your-cards").append(cardImg);
-
-    if (reduceAce(yourSum, yourAceCount) > 21) {
-        canHit = false;
-        disableButtons();
-        document.getElementById("message").innerText = "You lost";
-        updateScore(-parseInt(document.getElementById("bet-amount").value));
-        setTimeout(() => {
-            document.getElementById("message").innerText = "Wait a second!";
-        }, 1500);
-    
-        setTimeout(() => {
-            location.reload();
-        }, 3000);
-    }
-
 }
 
+function drawPlayerCards(count) {
+    for (let i = 0; i < count; i++) {
+        const card = drawCard("your-cards");
+        yourSum += getValue(card);
+        yourAceCount += checkAce(card);
+    }
+}
+
+function drawCard(targetElementId) {
+    const card = deck.pop();
+    const cardImg = document.createElement("img");
+    cardImg.src = `./pictures/cards/${card}.png`;
+    document.getElementById(targetElementId).append(cardImg);
+    return card;
+}
+
+function hit() {
+    const betAmount = validateBet();
+    if (betAmount === null || !canHit) return;
+
+    const card = drawCard("your-cards");
+    yourSum += getValue(card);
+    yourAceCount += checkAce(card);
+
+    if (reduceAce(yourSum, yourAceCount) > 21) {
+        endGame("You lost", -betAmount);
+    }
+}
 
 function stay() {
-    const betAmount = parseInt(document.getElementById("bet-amount").value);
-    if (betAmount > score || betAmount <= 0) {
-        document.getElementById("message").innerText = "You can't bet money you don't have.";
-        return;
-    }
-    if (canHit) {
-        document.getElementById("bet-amount").readOnly = true;
-    }
+    const betAmount = validateBet();
+    if (betAmount === null) return;
 
+    canHit = false;
+    revealDealerCard();
     dealerSum = reduceAce(dealerSum, dealerAceCount);
     yourSum = reduceAce(yourSum, yourAceCount);
 
-    canHit = false;
-    disableButtons();
-    document.getElementById("hidden").src = "./pictures/cards/" + hidden + ".png";
-
-    let message = "";
-
-    if (yourSum > 21) {
-        document.getElementById("message").innerText = "You lost";
-        updateScore(-betAmount);
-    } else if (dealerSum > 21) {
-        document.getElementById("message").innerText = "You Won. Your Money got doubled";
-        updateScore(betAmount);
-    } else if (yourSum === dealerSum) {
-        document.getElementById("message").innerText = "OO looks like a TIE";
-    } else if (yourSum > dealerSum) {
-        document.getElementById("message").innerText = "You Won. Your Money got doubled";
-        updateScore(betAmount);
-    } else {
-        document.getElementById("message").innerText = "You lost! :(";
-        updateScore(-betAmount);
-    }
-
-    document.getElementById("dealer-sum").innerText = dealerSum;
-    document.getElementById("your-sum").innerText = yourSum;
-    document.getElementById("results").innerText = message;
-
-    setTimeout(() => {
-        document.getElementById("message").innerText = "Wait a second!";
-    }, 1500);
-
-    setTimeout(() => {
-        location.reload();
-    }, 3000);
+    if (yourSum > 21) endGame("You lost", -betAmount);
+    else if (dealerSum > 21 || yourSum > dealerSum) endGame("You won! Money doubled", betAmount);
+    else if (yourSum === dealerSum) endGame("It's a tie", 0);
+    else endGame("You lost", -betAmount);
 }
+
+function validateBet() {
+    const betAmount = parseInt(document.getElementById("bet-amount").value);
+    if (isNaN(betAmount) || betAmount <= 0) {
+        showMessage("Please enter a positive number.");
+        return null;
+    } else if (betAmount > score) {
+        showMessage("You dont have enough money.");
+        return null;
+    }
+    document.getElementById("bet-amount").readOnly = true;
+    return betAmount;
+}
+
+function revealDealerCard() {
+    document.getElementById("hidden").src = `./pictures/cards/${hidden}.png`;
+}
+
+function endGame(message, scoreChange) {
+    showMessage(message);
+    updateScore(scoreChange);
+    disableButtons();
+    setTimeout(() => location.reload(), 3000);
+}
+
+function updateScore(amount) {
+    score += amount;
+    saveScore();
+    updateScoreDisplay();
+    if (score <= 0) showMessage("No more money! Visit Money Maker.");
+}
+
+function saveScore() {
+    localStorage.setItem('score', score);
+}
+
+function updateScoreDisplay() {
+    document.getElementById("score").textContent = score;
+}
+
 function disableButtons() {
     document.getElementById("hit").disabled = true;
     document.getElementById("stay").disabled = true;
 }
 
-
-function updateScore(amount) {
-    score += amount;
-    document.getElementById('score').textContent = score;
-    saveScore();
-
-    if (score <= 0) {
-        document.getElementById("message").innerText = "Siggidy says you have nomore money!!! You need to get some Money (go to Money maker)!";
-        document.getElementById('score').textContent = score;
-        saveScore();
-    }
-}
-
-
 function getValue(card) {
-    let data = card.split("-"); 
-    let value = data[0];
-
-    if (isNaN(value)) { 
-        if (value === "A") return 11;
-        return 10;
-    }
-    return parseInt(value);
+    const value = card.split("-")[0];
+    return value === "A" ? 11 : isNaN(value) ? 10 : parseInt(value);
 }
 
 function checkAce(card) {
-    return card[0] === "A" ? 1 : 0;
+    return card.startsWith("A") ? 1 : 0;
 }
 
 function reduceAce(playerSum, playerAceCount) {
@@ -187,4 +149,13 @@ function reduceAce(playerSum, playerAceCount) {
         playerAceCount -= 1;
     }
     return playerSum;
+}
+
+function showMessage(text) {
+    document.getElementById("message").innerText = text;
+}
+function limitInput(element) {
+    if (element.value.length > 10) {
+        element.value = element.value.slice(0, 10);
+    }
 }

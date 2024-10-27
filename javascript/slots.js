@@ -8,35 +8,30 @@ const symbols = [
     '<img src="pictures/pictures-slots/slots-watermelon.png">'
 ];
 
-const jackpotAmount = 100000000; 
-const jackpotChance = 0.001; 
+const jackpotAmount = 100000000;
+const jackpotChance = 0.001;
 
-let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
-document.getElementById("jackpot-info").innerText = `Jackpot: ${jackpotAmount.toLocaleString()}`;
-document.getElementById("score").innerText = ` ${score}`;
-
+let score = loadScore();
 let isSpinning = false;
+
+updateDisplay('jackpot-info', `Jackpot: ${jackpotAmount.toLocaleString()}`);
+updateDisplay('score', score);
 
 document.querySelector(".bet-button").addEventListener("click", () => {
     if (isSpinning) return;
     isSpinning = true;
 
-    const betAmount = parseInt(document.getElementById("bet-amount").value);
-    if (betAmount > score || betAmount <= 0) {
-        document.getElementById("message").innerText = "You cant bet money you dont have.";
+    const betAmount = validateBet();
+    if (betAmount === null) {
         isSpinning = false;
         return;
     }
 
     score -= betAmount;
-    document.getElementById("score").innerText = ` ${score}`;
+    updateDisplay('score', score);
 
-    const promises = [];
-    for (let i = 1; i <= 3; i++) {
-        promises.push(spinReel(`reel${i}`));
-    }
-
-    Promise.all(promises).then(() => {
+    const reelPromises = Array.from({ length: 3 }, (_, i) => spinReel(`reel${i + 1}`));
+    Promise.all(reelPromises).then(() => {
         setTimeout(() => {
             checkWin(betAmount);
             isSpinning = false;
@@ -47,23 +42,13 @@ document.querySelector(".bet-button").addEventListener("click", () => {
 function spinReel(reelId) {
     return new Promise((resolve) => {
         const reel = document.getElementById(reelId);
-        reel.innerHTML = "";
-
         let spinCount = 0;
         const interval = setInterval(() => {
-            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-            reel.innerHTML = randomSymbol;
+            reel.innerHTML = getRandomSymbol();
             spinCount++;
-
-            reel.scrollTop = reel.scrollHeight;
-
             if (spinCount >= 10) {
                 clearInterval(interval);
-
-                for (let j = 0; j < 3; j++) {
-                    const finalSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-                    reel.innerHTML = finalSymbol;
-                }
+                reel.innerHTML = getRandomSymbol(); 
                 resolve();
             }
         }, 300);
@@ -71,49 +56,69 @@ function spinReel(reelId) {
 }
 
 function checkWin(betAmount) {
-    const reels = document.querySelectorAll('.reel');
-    const firstSymbol = reels[0].getElementsByTagName("img")[0]?.src;
-    let winCount = 0;
-
-    for (let reel of reels) {
-        const images = reel.getElementsByTagName("img");
-        if (images[0]?.src === firstSymbol) {
-            winCount++;
-        }
-    }
-
+    const reels = Array.from(document.querySelectorAll('.reel img'));
+    const firstSymbol = reels[0]?.src;
+    const matchingSymbols = reels.filter(img => img.src === firstSymbol).length;
     let winnings = 0;
 
-    if (winCount === 3) {
+    if (matchingSymbols === 3) {
         winnings = betAmount * 5;
-
         if (Math.random() < jackpotChance) {
             winnings = jackpotAmount;
-            score += winnings;
-            document.getElementById("message").innerText = `Jackpot!!!!!!!!! You won: ${winnings.toLocaleString()}`;
+            showMessage(`Jackpot!!!!!!!!! You won: ${winnings.toLocaleString()}`);
         } else {
-            score += winnings;
-            document.getElementById("message").innerText = `YOU WON: ${winnings.toLocaleString()}`;
+            showMessage(`YOU WON: ${winnings.toLocaleString()}`);
         }
-    } else if (winCount === 2) {
+    } else if (matchingSymbols === 2) {
         winnings = betAmount * 2;
-        score += winnings;
-        document.getElementById("message").innerText = `YOU WON: ${winnings.toLocaleString()}`;
+        showMessage(`YOU WON: ${winnings.toLocaleString()}`);
     } else {
-        document.getElementById("message").innerText = "You lost! :(";
+        showMessage("You lost! :(");
     }
 
-    document.getElementById("score").innerText = ` ${score}`;
-
+    score += winnings;
+    updateDisplay('score', score);
     saveScore();
 
     if (score <= 0) {
-        document.getElementById("message").innerText = "Siggidy says you have nomore money!!! Go to Money maker to make some!";
-        document.getElementById("score").innerText = ` ${score}`;
-        saveScore();
+        showMessage("No more money! Visit Money Maker.");
     }
+}
+
+function validateBet() {
+    const betAmount = parseInt(document.getElementById("bet-amount").value);
+    if (isNaN(betAmount) || betAmount <= 0) {
+        showMessage("Please enter a positive amount!");
+        return null;
+    } else if (betAmount > score) {
+        showMessage("You dont have enough money.");
+        return null;
+    }
+    return betAmount;
+}
+
+function getRandomSymbol() {
+    return symbols[Math.floor(Math.random() * symbols.length)];
+}
+
+function showMessage(message) {
+    updateDisplay("message", message);
+}
+
+function updateDisplay(id, text) {
+    document.getElementById(id).innerText = text;
 }
 
 function saveScore() {
     localStorage.setItem('score', score);
+}
+
+function loadScore() {
+    return localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 100;
+}
+
+function limitInput(element) {
+    if (element.value.length > 10) {
+        element.value = element.value.slice(0, 10);
+    }
 }

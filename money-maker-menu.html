@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/schriften.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="./pictures/money-maker.png">
+
+        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Maker Hub</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+    
+        .background {
+            background-image: url('pictures/background-money-maker.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            height: 100%;
+            width: 100%;
+            position: absolute; 
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.555);
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="overlay"></div>
+
+    <header>
+        <h3 onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span class="header-text">nexor.ryhox.xyz</span>
+        </h3>
+        <h1>Money-Maker</h1>
+    </header>
+    
+        <section id="services">
+            <h2>Our selection</h2>
+        
+            <a href="siggidy-chase.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/siggidy-chase-logo.png" class="service-icon" alt="Gambling Logo">
+                    <span class="service-text">SIGGIDY CHASE</span>
+                </button>
+            </a>
+        
+            <a href="flappy-bird.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/flappy-bird-logo.png" style="height: 50px; width: 50px;" class="service-icon" alt="Terminal Logo">
+                    <span class="service-text">FLAPPY BIRD</span>
+                </button>
+            </a>
+        
+            <a href="lucky-wheel.html" class="service-card">
+                <button class="button22">
+                    <img src="pictures/lucky-wheel-logo.png" class="service-icon" alt="Money Maker Logo">
+                    <span class="service-text">LUCKY WHEEL</span>
+                </button>
+            </a>
+        </section>
+        
+        <button id="zurueck-button" onclick="window.location.href='index.html'" style="background-color: 1d1d1d; font-weight: 600; color: #ffffffa2; background: transparent; border: none; cursor: pointer;">
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+                <path fill="#ffffffa2" d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+            </svg>
+            <span style="color: #ffffffa2; font-weight: 600;">Back</span>
+        </button>
+
+    <script src="javascript/index.js"></script>
+</body> 
+</html> 
+ <!--by Ryhox and Nexor-->

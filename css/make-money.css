@@ -1,24 +1,143 @@
+
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    overflow: hidden;
     margin: 0;
+    overflow: hidden;
+    background-color: #1a1a1a;
+}
+
+#gameArea {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #005700;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
+#character {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    transition: transform 0.1s;
+}
+
+#controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #controls {
+        display: flex;
+    }
+}
+
+
 .container {
+    margin-top: 50px;
     text-align: center;
 }
 
-h1 {
-    color: #007937;
+
+.game-area {
+    position: relative;
+    width: 90vw; /* Anpassung für mobile Sicht */
+    height: 70vh; /* Anpassung für mobile Sicht */
+    max-width: 600px; /* Maximale Breite auf größeren Bildschirmen */
+    max-height: 400px; /* Maximale Höhe auf größeren Bildschirmen */
+    border: 2px solid #007937;
+    background-color: #1d1d1d;
+    overflow: hidden;
+    border-radius: 15px;
+    margin: 20px auto;
 }
 
+.character {
+    position: absolute;
+    font-size: 5vw; /* Anpassung der Schriftgröße für mobile Sicht */
+    transition: left 0.1s ease, top 0.1s ease;
+}
+
+/* Der Rest deines CSS bleibt unverändert */
+
+
+
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 2px solid white;
+    background-color: rgba(200, 200, 200, 0.9); /* Grauer Hintergrund */
+    color: white;
+    border-radius: 15px; /* Abgerundete Ecken */
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Leichte Schatten für Tiefe */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: black;
+    background: none;
+    border: none;
+}
+
+
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 2px solid white;
+    background-color: red;
+    color: white;
+    z-index: 1000;
+}
+
+.alert {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: yellow;
+    color: black;
+    padding: 10px;
+    z-index: 999;
+}
+
+
+
+
+
 .difficulty button {
-    background-color: #007937;
+    background-color: #707070;
     color: #1d1d1d;
     padding: 10px 20px;
     border: none;
@@ -87,3 +206,79 @@ h2 {
     color: rgb(2, 158, 2);
     -webkit-text-stroke: 1px black;
 }
+
+
+
+.popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #000;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.game-over-popup {
+    background-color: rgba(255, 0, 0, 0.8);
+}
+
+.difficulty-alert {
+    background-color: rgba(255, 255, 0, 0.8);
+    z-index: 1001;
+}
+
+.popup h2 {
+    margin: 0;
+    text-align: center;
+}
+
+#closePopup {
+    display: block;
+    margin: 20px auto 0;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: red; /* Roter Hintergrund */
+    border: 2px solid #000;
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 8px; /* Abgerundete Ecken */
+}
+
+.popup h2 {
+    color: #4B0000; /* Dunkelrot bis Schwarz */
+}
+
+.close {
+    position: absolute;
+    right: -10px; /* Weiter nach rechts */
+    top: -10px; /* Nach oben verschoben */
+    cursor: pointer;
+    font-size: 20px;
+    color: red; /* Rote Farbe für das X */
+    background-color: darkgray; /* Dunkelgrauer Hintergrund für den Kreis */
+    border-radius: 50%; /* Kreisform */
+    width: 30px; /* Breite des Kreises */
+    height: 30px; /* Höhe des Kreises */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none; /* Kein Rand */
+}
+
+

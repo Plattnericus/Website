@@ -1,3 +1,8 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
 #zurueck-button {
     display: flex;
     bottom: 30px;
@@ -41,6 +46,62 @@
     box-shadow: 3px 3px 20px #2af01873, -3px -3px 20px #067c0257;
     transform: translateY(-2px);
 }
+header {
+    color: #128a02ad;
+    background-color: rgba(26, 26, 26, 0.829);
+    box-shadow: 0 0 0 2px #31313198;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+header h3 {
+    margin: 0;
+    position: absolute;
+    left: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    font-size: 18px;
+    color: #d1d1d1;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+}
+
+header h3:hover {
+    color: #e6e6e6;
+}
+
+header h3:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+header h3:after {
+    content: "";
+    pointer-events: none;
+    bottom: -5px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: rgba(226, 226, 226, 0.589);
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
 
 @media (max-width: 600px) {
     #zurueck-button {
@@ -56,4 +117,19 @@
     #zurueck-button > svg {
         font-size: 16px;  
     }
+    header {
+        padding: 10px;
+        margin: 10px 0 20px 0;
+    }
+header h1 {
+    font-size: 1.2em;
+}
+header h3 {
+    font-size: 1em;
+    left: 40px;
+}
+.header-text {
+    display: none; 
+}
+
 }
