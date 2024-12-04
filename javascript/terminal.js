@@ -89,7 +89,7 @@ $(document).ready(function() {
     timetable                                -   timetable of the BFS FI 2
     minecraft random                         -   shows images of our MC WORLD</p>\n`;
             } else if (input === 'version') {
-                output.innerHTML += `${promptAndInput}\nVERSION 0.69420\n`;
+                output.innerHTML += `${promptAndInput}\nVERSION 1.69 - Finished\n`;
             } else if (input === 'date') {
                 const currentDate = new Date(); 
                 const formattedDate = currentDate.toLocaleString();
@@ -311,10 +311,6 @@ inputField.addEventListener('keydown', function(event) {
 });
 
 
-
-
-
-
 function asciiMensaplan() {
     const output = document.getElementById('output');
     const input = document.getElementById('input').value.toLowerCase();
@@ -322,104 +318,127 @@ function asciiMensaplan() {
 
     output.innerHTML += `${promptAndInput}\n`;
 
+    // Timetable data with unique meal names
     const timetableData = {
         "Montag": [
-            "Farfalle mit Zucchini und Lachssauce", 
+            "Farfalle mit Zucchini und Lachssauce",
             "Gebratene Hähnchenschenkel mit Pommes Frites",
-            "Kräuterknödel mit Pilzsauce", 
-            "Truthahngeschnetzeltes mit Reis", 
-            "Hirtenmaccheroni mit Mozzarelline", 
-            "Rindsbraten mit Eierspätzle", 
+            "Kräuterknödel mit Pilzsauce",
+            "Truthahngeschnetzeltes mit Reis",
+            "Hirtenmaccheroni mit Mozzarelline",
+            "Rindsbraten mit Eierspätzle",
         ],
-
         "Dienstag": [
-            "Truthahnbraten mit Reis", 
-            "Fusilli mit Thunfischsauce", 
-            "Wienerschnitzel (Truthahn) mit Ofenkartoffeln", 
-            "Spinatspätzle mit Schinken und Sahnesauce", 
-            "Champignonschnitzel mit Kroketten", 
+            "Truthahnbraten mit Reis",
+            "Fusilli mit Thunfischsauce",
+            "Wienerschnitzel (Truthahn) mit Ofenkartoffeln",
+            "Spinatspätzle mit Schinken und Sahnesauce",
+            "Champignonschnitzel mit Kroketten",
             "Schollenfilet gebacken mit Kräuterkartoffeln",
         ],
-
         "Mittwoch": [
-            "Rindsgulasch mit Polenta", 
+            "Rindsgulasch mit Polenta",
             "Schlutzkrapfen mit Butter und Parmesan",
-            "Kalbsbraten mit gedünstetem Reis",  
-            "Penne mit Bolognesersauce", 
+            "Kalbsbraten mit gedünstetem Reis",
+            "Penne mit Bolognesersauce",
             "Wienerschnitzel (Truthahn) mit Bratkartoffeln",
-            "Vollkornnudel mit Gemüsesauce", 
+            "Vollkornnudel mit Gemüsesauce",
         ],
- 
         "Donnerstag": [
-            "Spinat- und Käseknödel mit Gorgonzolasauce", 
-            "Fleischkrapfen mit Kartoffelpüree", 
-            "Conchiglie mit Tomaten-Basilikumsauce und Mozzarelline", 
-            "Kalbsgulasch mit Reis", 
-            "Pennette mit Meeresfrüchten", 
-            "Lasagne Bolognese oder Gemüse", 
+            "Spinat- und Käseknödel mit Gorgonzolasauce",
+            "Fleischkrapfen mit Kartoffelpüree",
+            "Conchiglie mit Tomaten-Basilikumsauce und Mozzarelline",
+            "Kalbsgulasch mit Reis",
+            "Pennette mit Meeresfrüchten",
+            "Lasagne Bolognese oder Gemüse",
         ],
-
         "Freitag": [
             "Kartoffelnocken mit Tomatensauce",
             "Kabeljau gratiniert mit Polenta",
-            "Lachsschnitte im Ofen mit Schnittlauchkartoffel", 
             "Lachsschnitte im Ofen mit Schnittlauchkartoffeln",
             "Pizza mit Thunfisch oder Margherita",
-            "Käsepressknödel mit Lauchsoße", 
-            "Gegrilltes Kalbswürstel mit Petersilienkartoffeln"
+            "Käsepressknödel mit Lauchsoße",
+            "Gegrilltes Kalbswürstel mit Petersilienkartoffeln",
         ]
     };
 
+    // Week date ranges
     const times = [
-        "21.10 - 25.10", 
-        "04.11 - 08.11", 
-        "11.11 - 15.11", 
-        "18.11 - 22.11", 
-        "25.11 - 29.11", 
+        "21.10 - 25.10",
+        "04.11 - 08.11",
+        "11.11 - 15.11",
+        "18.11 - 22.11",
+        "25.11 - 29.11",
         "02.12 - 06.12"
-    ]; 
+    ];
 
     const now = new Date();
-    const currentDayIndex = (now.getDay() + 6) % 7;
+    const currentDayIndex = (now.getDay() + 6) % 7; // Adjust to start with Monday
     const currentDate = now.getDate();
     const currentMonth = now.getMonth() + 1;
 
-    const table = document.createElement('table');
-    table.classList.add('timetable');
+    // Determine current week's range
+    const currentWeekIndex = times.findIndex((time) => {
+        const [start, end] = time.split(" - ").map(d => {
+            const [day, month] = d.split(".").map(Number);
+            return { day, month };
+        });
 
+        const startDate = new Date(now.getFullYear(), start.month - 1, start.day);
+        const endDate = new Date(now.getFullYear(), end.month - 1, end.day);
+        const todayDate = new Date(now.getFullYear(), currentMonth - 1, currentDate);
+
+        return todayDate >= startDate && todayDate <= endDate;
+    });
+
+    // Create the table
+    const table = document.createElement('table');
+    table.classList.add('table-mensa'); // Use custom class
+
+    // Table header
     const headerRow = document.createElement('tr');
     const monthHeader = document.createElement('th');
-    monthHeader.textContent = 'Monate';
+    monthHeader.textContent = ' ';
+    monthHeader.classList.add('th-mensa');
     headerRow.appendChild(monthHeader);
 
     const days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
-
     days.forEach(day => {
         const dayHeader = document.createElement('th');
         dayHeader.textContent = day;
+        dayHeader.classList.add('th-mensa');
         headerRow.appendChild(dayHeader);
     });
 
     table.appendChild(headerRow);
 
+    // Table body
     times.forEach((time, rowIndex) => {
         const row = document.createElement('tr');
 
         const monthCell = document.createElement('td');
         monthCell.textContent = time;
+        monthCell.classList.add('td-mensa');
         row.appendChild(monthCell);
 
         days.forEach((day, dayIndex) => {
             const subjectCell = document.createElement('td');
             const subject = timetableData[day]?.[rowIndex] || "";
 
-            subjectCell.textContent = subject;
+            // Make meal names clickable
+            const clickableMeal = document.createElement('a');
+            clickableMeal.href = `https://www.google.com/search?hl=en&tbm=isch&q=${encodeURIComponent(subject)}`;
+            clickableMeal.target = "_blank"; // Open in a new tab
+            clickableMeal.textContent = subject;
 
-            const targetDate = (rowIndex === 0 && currentDayIndex === dayIndex && currentDate === 23 && currentMonth === 10);
-            if (targetDate) {
-                subjectCell.style.backgroundColor = '#c1c0c028';
+            subjectCell.appendChild(clickableMeal);
+            subjectCell.classList.add('td-mensa');
+
+            // Highlight current day's meal
+            if (rowIndex === currentWeekIndex && dayIndex === currentDayIndex) {
+                subjectCell.style.backgroundColor = '#0bba0e'; // Light yellow
             } else if (subject === "") {
-                subjectCell.style.backgroundColor = '#161616d2'; 
+                subjectCell.style.backgroundColor = '#161616d2'; // Dark background for empty cells
             }
 
             row.appendChild(subjectCell);
@@ -430,8 +449,20 @@ function asciiMensaplan() {
 
     output.scrollTop = output.scrollHeight;
     output.appendChild(table);
-}
 
+    // Add custom CSS for the links
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .td-mensa a {
+            color: white;
+            text-decoration: none;
+        }
+        .td-mensa a:hover {
+            color: green;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 
 
@@ -700,14 +731,14 @@ function displayRandomContent() {
         "Wie sagt man, ??? eeeehmm ...",
         "*Italienisch Präsentation*\n\nSiggidy missing",
         "Teacher: Was ist die Absicht von Donald Trump?\n\nSiggidy: Atombombe!\n\nTeacher: Siggidy, das ist jetzt nicht passend zum Unterricht!! ab zum Nachsitzen und danach gibt es ein Gespräch mit dem Direktor!!",
-        "<img src='pictures/sieder/dasiggidy.png' alt='\n\nDaSiggidy' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidyfinger.png' alt='\n\nSiggidy is showing his looooong Finger' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidyhome.png' alt='\n\nHome of Siggiyy' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidyyyy.png' alt='\n\nJust Siggidy' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidy-am-Busbahnhof.jpg' alt='\n\nSiggidy at the Railwaystation' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidy-boss.jpg' alt='\n\nJust a BOSS' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidy-sieda.jpg' alt='\n\nSiggidy' width='250px' height='250px'>",
-        "<img src='pictures/sieder/siggidy-sitting_outside.jpg' alt='\n\nJust Siggidy sitting outside' width='250px' height='250px'>",
+        "<img src='pictures/sieder/dasiggidy.webp' alt='\n\nDaSiggidy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyfinger.webp' alt='\n\nSiggidy is showing his looooong Finger' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyhome.webp' alt='\n\nHome of Siggiyy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidyyyy.webp' alt='\n\nJust Siggidy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-am-Busbahnhof.webp' alt='\n\nSiggidy at the Railwaystation' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-boss.webp' alt='\n\nJust a BOSS' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-sieda.webp' alt='\n\nSiggidy' width='250px' height='250px'>",
+        "<img src='pictures/sieder/siggidy-sitting_outside.webp' alt='\n\nJust Siggidy sitting outside' width='250px' height='250px'>",
 !
         {
             type: 'video',
@@ -798,14 +829,14 @@ displayRandomContent();
 
 function displayRandomMinecraftContent() {
     const randomItems = [
-        "<img src='pictures/minecraft/Before-the-disaster.png' alt='\n\nBefore Disaster' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/budda-nearly-finished.png' alt='\n\nBudda nearly finished!' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/Budda-ryhox-and-nexor.png' alt='\n\nBudda pic: Ryhox and Nexor together' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/budda.png' alt='\n\nBudda' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/END-WORLD.png' alt='\n\nThis is our End of the World' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/first-pic-in-our-base.png' alt='\n\nThis is our first pic in our first Base!' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/gang-pic.png' alt='\n\nThis is our Gang!! Cheeesee!!' width='500px' height='250px'>",
-        "<img src='pictures/minecraft/moments-before-disaster.png' alt='\n\nThis is a Moment before Disaster! Siggidy didn\'t make it :(' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/Before-the-disaster.webp' alt='\n\nBefore Disaster' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/budda-nearly-finished.webp' alt='\n\nBudda nearly finished!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/Budda-ryhox-and-nexor.webp' alt='\n\nBudda pic: Ryhox and Nexor together' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/budda.webp' alt='\n\nBudda' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/END-WORLD.webp' alt='\n\nThis is our End of the World' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/first-pic-in-our-base.webp' alt='\n\nThis is our first pic in our first Base!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/gang-pic.webp' alt='\n\nThis is our Gang!! Cheeesee!!' width='500px' height='250px'>",
+        "<img src='pictures/minecraft/moments-before-disaster.webp' alt='\n\nThis is a Moment before Disaster! Siggidy didn\'t make it :(' width='500px' height='250px'>",
     ];
 
     const randomIndex = Math.floor(Math.random() * randomItems.length);

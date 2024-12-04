@@ -57,7 +57,7 @@ function drawPlayerCards(count) {
 function drawCard(targetElementId) {
     const card = deck.pop();
     const cardImg = document.createElement("img");
-    cardImg.src = `./pictures/cards/${card}.png`;
+    cardImg.src = `./pictures/cards/${card}.webp`;
     document.getElementById(targetElementId).append(cardImg);
     return card;
 }
@@ -104,7 +104,7 @@ function validateBet() {
 }
 
 function revealDealerCard() {
-    document.getElementById("hidden").src = `./pictures/cards/${hidden}.png`;
+    document.getElementById("hidden").src = `./pictures/cards/${hidden}.webp`;
 }
 
 function endGame(message, scoreChange) {

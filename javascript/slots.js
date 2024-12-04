@@ -1,11 +1,11 @@
 const symbols = [
-    '<img src="pictures/pictures-slots/slots-bar.png">',
-    '<img src="pictures/pictures-slots/slots-blue_lemon.png">',
-    '<img src="pictures/pictures-slots/slots-cherries.png">',
-    '<img src="pictures/pictures-slots/slots-diamond.png">',
-    '<img src="pictures/pictures-slots/slots-lemon.png">',
-    '<img src="pictures/pictures-slots/slots-seven.png">',
-    '<img src="pictures/pictures-slots/slots-watermelon.png">'
+    '<img src="pictures/pictures-slots/slots-bar.webp">',
+    '<img src="pictures/pictures-slots/slots-blue_lemon.webp">',
+    '<img src="pictures/pictures-slots/slots-cherries.webp">',
+    '<img src="pictures/pictures-slots/slots-diamond.webp">',
+    '<img src="pictures/pictures-slots/slots-lemon.webp">',
+    '<img src="pictures/pictures-slots/slots-seven.webp">',
+    '<img src="pictures/pictures-slots/slots-watermelon.webp">'
 ];
 
 const jackpotAmount = 100000000;

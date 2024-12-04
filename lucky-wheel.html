@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel</title>
+    <link rel="stylesheet" href="css/lucky-wheel.css">
+    <link rel="stylesheet" href="css/schriften.css">
+    <link rel="stylesheet" href="css/button.css">
+</head>
+<body>
+    <header>
+        <h3 onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span class="header-text">nexor.ryhox.xyz</span>
+        </h3>
+        <h1>Lucky-Wheel</h1>
+    </header>
+    <div id="score-container">
+        <h2>Balance: <span id="score"></span>$</h2>
+    </div>
+    <div id="countdown"></div>
+
+    
+    <div class="Wheel_ISuffer">
+    <div class="fortune-wheel">
+        <div id="wheel" class="wheel">
+          <div class="ring">
+            <div class="label"><span>50$</span></div>
+            <div class="label"><span>100$</span></div>
+            <div class="label"><span>125$</span></div>
+            <div class="label"><span>100$</span></div>
+            <div class="label"><span>0$</span></div>
+            <div class="label"><span>60$</span></div>
+            <div class="label"><span>120$</span></div>
+            <div class="label"><span>80$</span></div>
+            <div class="label"><span>400$</span></div>
+            <div class="label"><span>1000$</span></div>
+            <div class="label"><span>600$</span></div>
+            <div class="label"><span>180$</span></div>
+          </div>
+        </div>
+        <div class="back-wheel"></div>
+        <div class="holder"></div>
+        <div class="shadow"></div>
+        <div class="arrow"></div>
+        <button id="spin" class="spin">SPIN</button>
+
+    </div>
+</div>
+
+      <button id="zurueck-button" onclick="window.location.href='money-maker-menu.html'" style="background-color: 1d1d1d; font-weight: 600; color: #ffffffa2; background: transparent; border: none; cursor: pointer;">
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+            <path fill="#ffffffa2" d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+        </svg>
+        <span style="color: #ffffffa2; font-weight: 600;">Back</span>
+    </button>
+      <script src="javascript/lucky-wheel.js"></script>
+
+    </body>
+</html>

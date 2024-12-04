@@ -147,16 +147,36 @@ input {
     background-color: #e6e6e600 !important; 
 }
 
+.table-mensa {
+    font-size: 5px;
+    width: 60%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: large;
+    color: rgba(243, 243, 243, 0.904);
+}
 
-
+/* Style for headers and cells */
+.th-mensa, .td-mensa {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid green;
+    word-wrap: break-word;
+}
 @media only screen and (max-width: 768px) {
     body {
         font-size: small; 
         padding: 10px; 
     }
+    .table-mensa {
+        width: 20%;
+        font-size: 5px;
+        max-width: auto;
+    }
     .timetable {
         width: 20%;
         font-size: 8px;
+        max-width: auto;
     }
 
     .timetable th, .timetable td {
