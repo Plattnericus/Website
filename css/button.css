@@ -1,0 +1,217 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#zurueck-button {
+    display: flex;
+    bottom: 30px;
+    right: 60px;
+    left: auto;
+    top: auto;
+    text-align: center;
+    position: fixed; /* Ändere dies von absolute zu fixed */
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #1d1d1d !important; 
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    z-index: 100000;
+    border: none;
+    box-shadow: 0 0 0 2px #ffffff20;
+    color: #ffffffa2;
+    font-weight: 600;
+    font-size: 16px !important;
+}
+
+#zurueck-button > svg {
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    transition: all 0.4s ease-in;
+    width: 20px!important;
+    height: 20px!important;
+}
+
+#zurueck-button:hover > svg {
+    font-size: 1.2em;
+    transform: translateX(-10px);
+}
+
+#zurueck-button:hover {
+    box-shadow: 3px 3px 20px #2af01873, -3px -3px 20px #067c0257;
+    transform: translateY(-2px);
+}
+header {
+    color: #128a02ad;
+    background-color: rgba(26, 26, 26, 0.829);
+    box-shadow: 0 0 0 2px #31313198;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+header h3 {
+    margin: 0;
+    position: absolute;
+    left: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    font-size: 18px;
+    color: #d1d1d1;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+}
+
+header h3:hover {
+    color: #e6e6e6;
+}
+
+header h3:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+header h3:after {
+    content: "";
+    pointer-events: none;
+    bottom: -5px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: rgba(226, 226, 226, 0.589);
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+@media (max-width: 600px) {
+    #zurueck-button {
+        bottom: 15px;
+        right: 25px;
+        left: auto;
+        top: auto;
+        height: 2.5em;    
+        width: 80px;      
+        font-size: 7px;  
+    }
+
+    #zurueck-button > svg {
+        font-size: 16px;  
+    }
+    header {
+        padding: 10px;
+        margin: 10px 0 20px 0;
+    }
+header h1 {
+    font-size: 1.2em;
+}
+header h3 {
+    font-size: 1em;
+    left: 40px;
+}
+.header-text {
+    display: none; 
+}
+
+}
+
+
+#score-container{
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+    color: #d1d1d1;
+}
+
+
+
+
+
+
+
+
+/* Button to Reset at Siggidy chase */
+
+button1111 {
+    margin-top: 180px;
+    padding: 0.9em 1.8em;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 4px;
+    color: transparent;
+    border: 3px solid green;
+    font-size: 14px;
+    position: relative;
+    font-family: inherit;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 7px;
+  }
+  
+  button1111::before {
+    content: "restart";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #363636;
+    color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: bold;
+    transition: all 0.5s;
+    border-radius: 6px;
+  }
+  
+  button1111:hover::before {
+    left: 100%;
+    transform: scale(0) rotateY(360deg);
+    opacity: 0;
+  }
+  
+  button1111::after {
+    content: "restarting now!";
+    position: absolute;
+    top: 0;
+    font: bold;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #363636;
+    color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    transform: scale(0) rotateY(0deg);
+    opacity: 0;
+    border-radius: 6px;
+  }
+  
+  button1111:hover::after {
+    left: 0;
+    transform: scale(1) rotateY(360deg);
+    opacity: 1;
+  }
+  
