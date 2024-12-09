@@ -116,7 +116,7 @@ $(document).ready(function() {
                 asciiMensaplan();
             }else if (input === 'version') {
                 output.innerHTML += `${promptAndInput}\nVERSION 1.69 - Finished\n`;
-            }else if (input === 'shutdown') {
+            }else if (input === 'sudo su -') {
                 output.innerHTML += `${promptAndInput}\nSieder hoff nit!! HAHAHAHAHAHA`;
             } else if (input.startsWith('get money')) {
                 output.innerHTML += `${promptAndInput}\n`;
