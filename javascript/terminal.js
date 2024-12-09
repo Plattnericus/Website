@@ -436,7 +436,7 @@ function asciiMensaplan() {
 
             // Highlight current day's meal
             if (rowIndex === currentWeekIndex && dayIndex === currentDayIndex) {
-                subjectCell.style.backgroundColor = '#0bba0e'; // Light yellow
+            subjectCell.style.backgroundColor = 'rgba(11, 186, 14, 0.4)';
             } else if (subject === "") {
                 subjectCell.style.backgroundColor = '#161616d2'; // Dark background for empty cells
             }
