@@ -107,16 +107,17 @@ $(document).ready(function() {
                     });
             } else if (input === 'todo') {
                 output.innerHTML += `${promptAndInput}\nCOMMANDS THAT STILL NEED TO BE PROGRAMMED:\neverything is finished!!!\n`;
+            } else if (input === 'shutdown') {
+                simulateShutdown();
             } else if (input === 'timetable') {
-                
                 asciiTimetable();
-            }else if (input === 'vacation') {
+            } else if (input === 'vacation') {
                 vacation(); 
             } else if(input == 'mensa'){
                 asciiMensaplan();
-            }else if (input === 'version') {
+            } else if (input === 'version') {
                 output.innerHTML += `${promptAndInput}\nVERSION 1.69 - Finished\n`;
-            }else if (input === 'sudo su -') {
+            } else if (input === 'sudo su -') {
                 output.innerHTML += `${promptAndInput}\nSieder hoff nit!! HAHAHAHAHAHA`;
             } else if (input.startsWith('get money')) {
                 output.innerHTML += `${promptAndInput}\n`;
