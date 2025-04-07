@@ -3,26 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Digital Abyss</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/webp" href="./pictures/logo.webp">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2531068864367590"
      crossorigin="anonymous"></script>
-    <title>404 - Page not found</title>
-    <link rel="stylesheet" href="css/404.css">
-      <link rel="stylesheet" href="css/schriften.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="noise"></div>
-<div class="overlay"></div>
-<div class="terminal">
-  <h1>Error <span class="errorcode">404</span></h1>
-  <p class="output">The page you are looking for might have been removed, had its name changed or is temporarily unavailable.</p>
-  <p class="output">Please try to <a href="/">return to the homepage</a>.</p>
-  <p class="output">Good luck.</p>
-</div>
-
-    <script src="javascript/404.js"></script>
+    <canvas id="matrixCanvas"></canvas>
+    <div class="container">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="terminal-button close"></div>
+                    <div class="terminal-button minimize"></div>
+                    <div class="terminal-button expand"></div>
+                </div>
+                <div class="terminal-title">system_console.exe</div>
+            </div>
+            <div class="terminal-body" id="terminal">
+                <div class="terminal-content">
+                    <div class="command-line">
+                        <span class="prompt">user@digital-abyss:~$</span>
+                        <span class="command">init_session</span>
+                    </div>
+                    <div class="output-line">
+                        > Initializing terminal session...
+                    </div>
+                    <div class="output-line">
+                        > Establishing secure connection...
+                    </div>
+                    <div class="output-line">
+                        > Authentication complete. Welcome, user.
+                    </div>
+                    <div class="error-code">
+                        <div class="error-number">4</div>
+                        <div class="error-number">0</div>
+                        <div class="error-number">4</div>
+                    </div>
+                    <div class="error-message">
+                        <div class="matrix-text" id="matrixText">PATH NOT FOUND</div>
+                        <div class="error-description">The digital realm you seek does not exist in this dimension.</div>
+                    </div>
+                    <div class="navigation-options">
+                        <a href="/" class="nav-button">
+                            <span class="button-number">01</span>
+                            <span class="button-text">Return to safety</span>
+                        </a>
+                        <a href="/explore" class="nav-button">
+                            <span class="button-number">02</span>
+                            <span class="button-text">Explore the void</span>
+                        </a>
+                        <a href="https://github.com" class="nav-button">
+                            <span class="button-number">03</span>
+                            <span class="button-text">Seek knowledge</span>
+                        </a>
+                        <a href="mailto:contact@example.com" class="nav-button">
+                            <span class="button-number">04</span>
+                            <span class="button-text">Call for help</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="terminalAudio" src="https://assets.mixkit.co/active_storage/sfx/2577/2577-preview.mp3" loop></audio>
+    <script src="script.js"></script>
 </body>
 </html>
-
- <!--by Ryhox and Nexor-->
