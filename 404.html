@@ -3,18 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Digital Abyss</title>
-    <link rel="stylesheet" href="css/404.css">
-    <link rel="icon" type="image/webp" href="./pictures/logo.webp">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2531068864367590"
-     crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>404 - Digital Void</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2531068864367590" crossorigin="anonymous"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Courier New', monospace; 
+            background-color: #000; 
+            color: #0f0; 
+            height: 100vh; 
+            overflow: hidden; 
+            position: relative;
+        }
+        
+        .container { 
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        .terminal-container {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 90vh;
+            border: 1px solid #0f0;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .terminal-header {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #0f0;
+            background-color: rgba(0, 15, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+            margin-right: 15px;
+        }
+        
+        .terminal-button {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid #0f0;
+        }
+        
+        .terminal-button.close { background-color: #f00; }
+        .terminal-button.minimize { background-color: #ff0; }
+        .terminal-button.expand { background-color: #0f0; }
+        
+        .terminal-title {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        
+        .terminal-body {
+            padding: 30px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .terminal-body::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .terminal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .command-line {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .prompt {
+            color: #0f0;
+            margin-right: 10px;
+            text-shadow: 0 0 3px #0f0;
+        }
+        
+        .command {
+            color: #0f0;
+            text-shadow: 0 0 3px #0f0;
+        }
+        
+        .output-line {
+            color: #0f0;
+            line-height: 1.6;
+            text-shadow: 0 0 2px #0f0;
+        }
+        
+        .error-code {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .error-number {
+            font-size: 120px;
+            font-weight: bold;
+            color: #0f0;
+            text-shadow: 0 0 15px #0f0;
+            position: relative;
+            animation: glitch-number 2s infinite;
+        }
+        
+        .error-number:nth-child(1) { animation-delay: 0.1s; }
+        .error-number:nth-child(2) { animation-delay: 0.3s; }
+        .error-number:nth-child(3) { animation-delay: 0.5s; }
+        
+        .error-message {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .matrix-text {
+            font-size: 28px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            animation: glitch 0.8s linear infinite;
+        }
+        
+        .error-description {
+            font-size: 16px;
+            color: #0f0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            text-shadow: 0 0 3px #0f0;
+            animation: flicker 5s infinite;
+        }
+        
+        .navigation-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: flex;
+            align-items: center;
+            padding: 18px 25px;
+            border: 1px solid #0f0;
+            background-color: rgba(0, 255, 0, 0.05);
+            color: #0f0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 3px #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        
+        .nav-button:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            animation: glitch-button 0.5s;
+        }
+        
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .nav-button:hover::before {
+            left: 100%;
+        }
+        
+        .button-number {
+            font-size: 14px;
+            color: rgba(0, 255, 0, 0.7);
+            margin-right: 15px;
+        }
+        
+        .button-text {
+            font-size: 16px;
+        }
+        
+        .ads-container {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #0f0;
+            background-color: rgba(0, 20, 0, 0.1);
+            text-align: center;
+        }
+        
+        /* Glitch Animations */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+        
+        @keyframes glitch-number {
+            0%, 100% { transform: translate(0); text-shadow: 0 0 15px #0f0; }
+            25% { transform: translate(-5px, 5px); text-shadow: 0 0 20px #0f0, 5px -5px 0 #f00; }
+            50% { transform: translate(5px, -5px); text-shadow: 0 0 25px #0f0, -5px 5px 0 #00f; }
+            75% { transform: translate(-5px, 0); text-shadow: 0 0 20px #0f0, 5px 0 0 #ff0; }
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.7; }
+        }
+        
+        @keyframes glitch-button {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        /* Scanline Effect */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to bottom, 
+                    transparent 0%, 
+                    rgba(0, 255, 0, 0.05) 50%, 
+                    transparent 100%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+            z-index: 2;
+        }
+        
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .terminal-body { padding: 20px; }
+            .error-code { gap: 15px; margin: 30px 0; }
+            .error-number { font-size: 80px; }
+            .matrix-text { font-size: 20px; letter-spacing: 3px; }
+            .navigation-options { grid-template-columns: 1fr; }
+            .nav-button { padding: 15px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            .error-number { font-size: 60px; }
+            .matrix-text { font-size: 18px; }
+            .error-description { font-size: 14px; }
+        }
+    </style>
 </head>
 <body>
-    <canvas id="matrixCanvas"></canvas>
     <div class="container">
+        <div class="scanlines"></div>
         <div class="terminal-container">
             <div class="terminal-header">
                 <div class="terminal-buttons">
@@ -27,7 +326,7 @@
             <div class="terminal-body" id="terminal">
                 <div class="terminal-content">
                     <div class="command-line">
-                        <span class="prompt">user@digital-abyss:~$</span>
+                        <span class="prompt">user@digital-void:~$</span>
                         <span class="command">init_session</span>
                     </div>
                     <div class="output-line">
@@ -46,7 +345,7 @@
                     </div>
                     <div class="error-message">
                         <div class="matrix-text" id="matrixText">PATH NOT FOUND</div>
-                        <div class="error-description">The digital realm you seek does not exist in this dimension.</div>
+                        <div class="error-description">The digital path you requested does not exist in this system.</div>
                     </div>
                     <div class="navigation-options">
                         <a href="/" class="nav-button">
@@ -66,11 +365,85 @@
                             <span class="button-text">Call for help</span>
                         </a>
                     </div>
+                    <div class="ads-container">
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2531068864367590" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <audio id="terminalAudio" src="https://assets.mixkit.co/active_storage/sfx/2577/2577-preview.mp3" loop></audio>
-    <script src="javascript/404.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Matrix text effect
+            const matrixText = document.getElementById('matrixText');
+            const originalText = matrixText.textContent;
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+            
+            function glitchText() {
+                let iterations = 0;
+                const interval = setInterval(() => {
+                    matrixText.textContent = originalText.split('')
+                        .map((char, index) => {
+                            if(index < iterations) return originalText[index];
+                            return chars[Math.floor(Math.random() * chars.length)];
+                        })
+                        .join('');
+                    
+                    if(iterations >= originalText.length) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            matrixText.textContent = originalText;
+                            setTimeout(glitchText, 1000 + Math.random() * 2000);
+                        }, 200);
+                    }
+                    iterations += 0.3;
+                }, 30);
+            }
+            
+            glitchText();
+            
+            // Terminal typing effect
+            const terminalLines = document.querySelectorAll('.output-line');
+            terminalLines.forEach((line, index) => {
+                const originalContent = line.textContent;
+                line.textContent = '';
+                setTimeout(() => {
+                    let i = 0;
+                    const typing = setInterval(() => {
+                        line.textContent += originalContent[i];
+                        i++;
+                        if(i >= originalContent.length) clearInterval(typing);
+                    }, 20 + Math.random() * 30);
+                }, 500 * index);
+            });
+            
+            // Button hover effects
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.animation = 'glitch-button 0.3s';
+                    setTimeout(() => {
+                        button.style.animation = '';
+                    }, 300);
+                });
+                
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    button.style.boxShadow = '0 0 20px #0f0';
+                    setTimeout(() => {
+                        const href = button.getAttribute('href');
+                        if(href.startsWith('http') || href.startsWith('mailto')) {
+                            window.open(href, '_blank');
+                        } else {
+                            window.location.href = href;
+                        }
+                    }, 300);
+                });
+            });
+            
+            // Initialize AdSense
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        });
+    </script>
 </body>
 </html>
