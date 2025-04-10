@@ -5,81 +5,58 @@
     <link rel="stylesheet" href="css/schriften.css">
     <link rel="stylesheet" href="css/button.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/cookies.css"
     <link rel="icon" type="image/webp" href="./pictures/logo.webp">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2531068864367590"
      crossorigin="anonymous"></script>
-        
+    <script src="javascript/cookies.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexor</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-    
-        .background {
-            background-image: url('pictures/background.webp');
-            background-size: cover;
-            background-position: center;
-            filter: blur(3px);
-            height: 100%;
-            width: 100%;
-            position: absolute; 
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-    
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.336);
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-    </style>
+    <title>Nexorhub</title>
 </head>
 <body>
     <div class="background"></div>
     <div class="overlay"></div>
 
-        <header>
-            <h1 style="color:#d1d1d1;"><i class="fas fa-home"></i> nexorhub.com</h1>
-        </header>  
+    <header>
+        <h1 style="color:#d1d1d1;"><i class="fas fa-home"></i> nexorhub.com</h1>
+    </header>  
 
-        <section id="services">
-            <h2>Our selection</h2>
-        
-            <a href="gambling" class="service-card">
-                <button class="button22">
-                    <img src="pictures/gambling.webp" class="service-icon" alt="Gambling Logo">
-                    <span class="service-text">GAMBLING</span>
-                </button>
-            </a>
-        
-            <a href="terminal" class="service-card">
-                <button class="button22">
-                    <img src="pictures/terminal-logo.webp" class="service-icon" alt="Terminal Logo">
-                    <span class="service-text">TERMINAL</span>
-                </button>
-            </a>
-        
-            <a href="money-maker-menu" class="service-card">
-                <button class="button22">
-                    <img src="pictures/money-maker.webp" class="service-icon" alt="Money Maker Logo">
-                    <span class="service-text">MONEY MAKER</span>
-                </button>
-            </a>
-        </section>
-        
-        
-        
+    <section id="services">
+        <h2>Our selection</h2>
+    
+        <a href="gambling" class="service-card">
+            <button class="button22">
+                <img src="pictures/gambling.webp" class="service-icon" alt="Gambling Logo">
+                <span class="service-text">GAMBLING</span>
+            </button>
+        </a>
+    
+        <a href="terminal" class="service-card">
+            <button class="button22">
+                <img src="pictures/terminal-logo.webp" class="service-icon" alt="Terminal Logo">
+                <span class="service-text">TERMINAL</span>
+            </button>
+        </a>
+    
+        <a href="money-maker-menu" class="service-card">
+            <button class="button22">
+                <img src="pictures/money-maker.webp" class="service-icon" alt="Money Maker Logo">
+                <span class="service-text">MONEY MAKER</span>
+            </button>
+        </a>
+    </section>
 
-    <script src="javascript/index.js"></script>
-</body> 
-</html> 
- <!--by Ryhox and Nexor-->
+    <div id="cookiePopup" class="cookie-container">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <p>We use cookies to enhance your experience on nexorhub.com. By clicking "Accept", you agree to our use of cookies. Learn more in our <a href="privacy">Privacy Policy</a>.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button id="cookieDecline" class="cookie-btn cookie-decline">Decline</button>
+                <button id="cookieAccept" class="cookie-btn cookie-accept">Accept</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
