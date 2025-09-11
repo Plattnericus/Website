@@ -478,11 +478,11 @@ function asciiTimetable() {
     output.innerHTML += `${promptAndInput}\n`;
 
     const timetableData = {
-        "Monday": ["M1-M3", "M1-M3", "M1-M3", "M1-M3", "Rel", "Ger", "", "M4", "M4", "M4"], 
-        "Tuesday": ["Maths", "Maths", "Eng", "M1-M3", "M1-M3", "M1-M3"],
-        "Wednesday": ["Eng", "Ital", "M1-M3", "M1-M3", "GK-ZG", "", "M4", "M4"],
-        "Thursday": ["Sports", "Sports", "Ger", "Ger", "Maths", "", "M1-M3", "M1-M3", "M1-M3", "M1-M3"],
-        "Friday": ["Ital", "Ital", "GK-ZG", "Eng", "Eng"]
+        "Monday": ["Rel", "Engl", "Ital", "M5-M7", "M5-M7", "", "M5-M7", "M5-M7", "M5-M7"], 
+        "Tuesday": ["Ital", "Ital", "M5-M7", "M5-M7", "M5-M7", "M5-M7"],
+        "Wednesday": ["Maths", "Deu", "Sports", "Sports", "Re-Wiku", "", "M4", "M4", "M4"],
+        "Thursday": ["Engl", "Engl", "Re-Wiku", "M8", "M8", "", "M5-M7", "M5-M7", "M5-M7", "M5-M7"],
+        "Friday": ["Engl", "Deu", "Deu", "Maths", "Maths"]
     }; 
     
     const weekDates = getWeekDates();
